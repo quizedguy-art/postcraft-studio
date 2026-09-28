@@ -30,6 +30,6 @@ export const PAYMENT_CONFIG: PaymentConfig = {
   lifetimeFounder: {
     price: 29,
     priceLabel: '$29 one-time',
-    checkoutUrl: 'https://buy.stripe.com/test_dRm3cx9wk8o15G23N8aBk00', // Update with lifetime link
+    checkoutUrl: 'https://buy.stripe.com/test_fZu0wR5g4eMG1TQ6ZkabK01',
   },
 };
