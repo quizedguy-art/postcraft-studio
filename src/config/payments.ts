@@ -18,18 +18,18 @@ export interface PaymentConfig {
 }
 
 export const PAYMENT_CONFIG: PaymentConfig = {
-  provider: 'stripe', 
+  provider: 'lemonsqueezy', 
   currency: '$',
   
   monthlyPro: {
     price: 9,
     priceLabel: '$9/month',
-    checkoutUrl: 'https://buy.stripe.com/test_dRm3cx9wk8o15G23N8aBk00',
+    checkoutUrl: 'https://postcraftstudioapp.lemonsqueezy.com/checkout/buy/3f9e9567-7d66-47bb-9d17-35fe5f23b10f',
   },
 
   lifetimeFounder: {
     price: 29,
     priceLabel: '$29 one-time',
-    checkoutUrl: 'https://buy.stripe.com/test_fZu0wR5g4eMG1TQ6ZkabK01',
+    checkoutUrl: 'https://postcraftstudioapp.lemonsqueezy.com/checkout/buy/3f9e9567-7d66-47bb-9d17-35fe5f23b10f', // Update once second link is created
   },
 };
