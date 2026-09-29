@@ -66,15 +66,21 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="font-black text-base sm:text-lg text-white tracking-tight">
                 Slide<span className="text-indigo-400">Forge</span>
               </span>
-              {subscription.isPro ? (
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white font-mono flex items-center gap-1 shadow-sm">
-                  <Crown className="w-3 h-3 fill-white" /> PRO
-                </span>
-              ) : (
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 font-mono">
-                  FREE TIER
-                </span>
-              )}
+              <button
+                onClick={onOpenPricing}
+                title="Manage Subscription"
+                className="cursor-pointer hover:opacity-80 transition-opacity"
+              >
+                {subscription.isPro ? (
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white font-mono flex items-center gap-1 shadow-sm">
+                    <Crown className="w-3 h-3 fill-white" /> PRO
+                  </span>
+                ) : (
+                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 font-mono">
+                    FREE TIER
+                  </span>
+                )}
+              </button>
             </div>
             <p className="hidden sm:block text-[11px] text-slate-400">
               AI Viral Carousel & Visual Deck Studio
@@ -138,16 +144,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="hidden md:inline">Brand Kit</span>
           </button>
 
-          {/* Upgrade CTA (if not pro) */}
-          {!subscription.isPro && (
-            <button
-              onClick={onOpenPricing}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 text-xs font-bold transition-all"
-            >
-              <Crown className="w-3.5 h-3.5 text-amber-400" />
-              <span>Upgrade</span>
-            </button>
-          )}
+          {/* Upgrade CTA / Pricing */}
+          <button
+            onClick={onOpenPricing}
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              subscription.isPro
+                ? 'bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/30'
+                : 'bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 animate-pulse'
+            }`}
+          >
+            <Crown className="w-3.5 h-3.5 text-amber-400" />
+            <span>{subscription.isPro ? 'Pro Active' : 'Upgrade'}</span>
+          </button>
+
 
           {/* EXPORT DROPDOWN */}
           <div className="relative">

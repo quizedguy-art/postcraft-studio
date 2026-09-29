@@ -11,6 +11,7 @@ import {
   CreditCard, 
   Key, 
   ExternalLink,
+  RotateCcw
 } from 'lucide-react';
 
 interface PricingModalProps {
@@ -18,12 +19,15 @@ interface PricingModalProps {
   onClose: () => void;
   subscription: UserSubscription;
   onUpgrade: (tier: 'pro' | 'lifetime', key?: string) => void;
+  onResetToFree?: () => void;
 }
 
 export const PricingModal: React.FC<PricingModalProps> = ({
   isOpen,
   onClose,
+  subscription,
   onUpgrade,
+  onResetToFree,
 }) => {
   const [promoCode, setPromoCode] = useState('');
   const [promoStatus, setPromoStatus] = useState<string | null>(null);
@@ -44,18 +48,8 @@ export const PricingModal: React.FC<PricingModalProps> = ({
     }
   };
 
-  const handleInitiateCheckout = (tier: 'pro' | 'lifetime') => {
-    const targetUrl = tier === 'lifetime' 
-      ? PAYMENT_CONFIG.lifetimeFounder.checkoutUrl 
-      : PAYMENT_CONFIG.monthlyPro.checkoutUrl;
-
-    if (targetUrl && (targetUrl.startsWith('http://') || targetUrl.startsWith('https://'))) {
-      // Direct redirect to Lemon Squeezy Checkout page
-      window.location.href = targetUrl;
-    } else {
-      alert('Payment link not configured yet.');
-    }
-  };
+  const monthlyUrl = PAYMENT_CONFIG.monthlyPro.checkoutUrl;
+  const lifetimeUrl = PAYMENT_CONFIG.lifetimeFounder.checkoutUrl;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
@@ -78,6 +72,22 @@ export const PricingModal: React.FC<PricingModalProps> = ({
           <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto">
             Create limitless viral carousels, remove watermarks, access premium aesthetics & 4K exports.
           </p>
+
+          {subscription.isPro && (
+            <div className="pt-2 flex items-center justify-center gap-3">
+              <span className="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/30">
+                ⭐ You are currently on {subscription.tier.toUpperCase()} Pro
+              </span>
+              {onResetToFree && (
+                <button
+                  onClick={onResetToFree}
+                  className="text-xs text-slate-400 hover:text-rose-400 underline flex items-center gap-1"
+                >
+                  <RotateCcw className="w-3 h-3" /> Reset to Free for testing
+                </button>
+              )}
+            </div>
+          )}
         </div>
 
         {/* PRICING TIERS */}
@@ -117,13 +127,15 @@ export const PricingModal: React.FC<PricingModalProps> = ({
               </div>
             </div>
 
-            <button
-              onClick={() => handleInitiateCheckout('pro')}
-              className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs transition-colors border border-slate-700 flex items-center justify-center gap-1.5"
+            <a
+              href={monthlyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs transition-colors border border-slate-700 flex items-center justify-center gap-1.5 cursor-pointer text-center no-underline"
             >
-              <span>Start $9/mo Pro</span>
+              <span>Pay & Start $9/mo Pro</span>
               <ExternalLink className="w-3.5 h-3.5 opacity-60" />
-            </button>
+            </a>
           </div>
 
           {/* LIFETIME FOUNDER PASS */}
@@ -168,13 +180,15 @@ export const PricingModal: React.FC<PricingModalProps> = ({
               </div>
             </div>
 
-            <button
-              onClick={() => handleInitiateCheckout('lifetime')}
-              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-fuchsia-600 hover:from-indigo-500 hover:to-fuchsia-500 text-white font-bold text-xs transition-all shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-1.5"
+            <a
+              href={lifetimeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-fuchsia-600 hover:from-indigo-500 hover:to-fuchsia-500 text-white font-bold text-xs transition-all shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-1.5 cursor-pointer text-center no-underline"
             >
-              <span>Get Lifetime Access ($29 / ₹1,999)</span>
+              <span>Pay & Get Lifetime Access ($29 / ₹1,999)</span>
               <ExternalLink className="w-3.5 h-3.5 opacity-80" />
-            </button>
+            </a>
           </div>
         </div>
 

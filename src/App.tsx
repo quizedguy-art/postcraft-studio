@@ -562,7 +562,17 @@ export function App() {
         onClose={() => setIsPricingModalOpen(false)}
         subscription={subscription}
         onUpgrade={handleUpgrade}
+        onResetToFree={() => {
+          setSubscription({
+            isPro: false,
+            tier: 'free',
+            exportsToday: 0,
+            maxFreeExportsPerDay: 5,
+          });
+          setProject(p => ({ ...p, showWatermark: true }));
+        }}
       />
+
 
       <MonetizationGuideModal
         isOpen={isGuideModalOpen}
