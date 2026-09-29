@@ -30,6 +30,6 @@ export const PAYMENT_CONFIG: PaymentConfig = {
   lifetimeFounder: {
     price: 29,
     priceLabel: '$29 one-time',
-    checkoutUrl: 'https://postcraftstudioapp.lemonsqueezy.com/checkout/buy/3f9e9567-7d66-47bb-9d17-35fe5f23b10f', // Update once second link is created
+    checkoutUrl: 'https://postcraftstudioapp.lemonsqueezy.com/checkout/buy/7884e779-8f58-4949-a22e-020183c33918',
   },
 };
