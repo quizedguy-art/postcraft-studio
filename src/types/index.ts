@@ -8,7 +8,26 @@ export type ThemeId =
   | 'sunset-glow'
   | 'emerald-trust'
   | 'pastel-soft'
-  | 'cyberpunk';
+  | 'cyberpunk'
+  | 'custom';
+
+export type FontFamilyId = 
+  | 'inter'
+  | 'jakarta'
+  | 'outfit'
+  | 'space'
+  | 'playfair'
+  | 'jetbrains'
+  | 'syne'
+  | 'bricolage';
+
+export interface FontOption {
+  id: FontFamilyId;
+  name: string;
+  fontFamily: string;
+  category: 'sans' | 'serif' | 'mono' | 'display';
+  preview: string;
+}
 
 export type SlideType = 
   | 'cover'
@@ -17,6 +36,7 @@ export type SlideType =
   | 'tweet'
   | 'stats'
   | 'code'
+  | 'image'
   | 'cta';
 
 export interface StatItem {
@@ -43,6 +63,10 @@ export interface Slide {
   highlightText?: string;
   alignment?: 'left' | 'center';
   customBg?: string;
+  // Slide Media & Custom Visuals
+  imageUrl?: string;
+  imageCaption?: string;
+  imagePosition?: 'top' | 'middle' | 'background';
 }
 
 export interface BrandKit {
@@ -54,17 +78,32 @@ export interface BrandKit {
   isVerified?: boolean;
 }
 
+export interface CustomThemeConfig {
+  bgGradient: string;
+  cardBg: string;
+  borderColor: string;
+  textColor: string;
+  headlineColor: string;
+  accentColor: string;
+  accentBg: string;
+  tagBg: string;
+  tagText: string;
+}
+
 export interface Project {
   id: string;
   title: string;
   aspectRatio: AspectRatio;
   themeId: ThemeId;
+  customTheme?: CustomThemeConfig;
   brand: BrandKit;
   slides: Slide[];
-  customFont: string;
+  customFont: FontFamilyId;
   showWatermark: boolean;
   showSlideNumbers: boolean;
   showSwipeIndicator: boolean;
+  updatedAt?: number;
+  createdAt?: number;
 }
 
 export interface ThemeConfig {
@@ -99,4 +138,13 @@ export interface UserSubscription {
   exportsToday: number;
   maxFreeExportsPerDay: number;
   licenseKey?: string;
+}
+
+export interface ProjectSummary {
+  id: string;
+  title: string;
+  slideCount: number;
+  aspectRatio: AspectRatio;
+  themeId: ThemeId;
+  updatedAt: number;
 }
