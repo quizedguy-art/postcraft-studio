@@ -6,7 +6,6 @@ import {
   Layers, 
   User, 
   Crown, 
-  DollarSign, 
   ChevronDown, 
   FileText, 
   FolderArchive, 
@@ -23,7 +22,7 @@ interface NavbarProps {
   onOpenTemplates: () => void;
   onOpenBrandKit: () => void;
   onOpenPricing: () => void;
-  onOpenGuide: () => void;
+  onOpenGuide?: () => void;
   onExportPdf: () => void;
   onExportZip: () => void;
   onExportPng: () => void;
@@ -38,7 +37,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenTemplates,
   onOpenBrandKit,
   onOpenPricing,
-  onOpenGuide,
   onExportPdf,
   onExportZip,
   onExportPng,
@@ -108,15 +106,6 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* ACTION BUTTONS & EXPORT */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* $100/Wk Monetization Guide */}
-          <button
-            onClick={onOpenGuide}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold transition-all shadow-sm shadow-emerald-500/10"
-          >
-            <DollarSign className="w-3.5 h-3.5" />
-            <span className="hidden md:inline">$100/Wk Guide</span>
-          </button>
-
           {/* AI Magic Generator */}
           <button
             onClick={onOpenAI}
