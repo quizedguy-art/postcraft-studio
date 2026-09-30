@@ -22,6 +22,7 @@ import {
   exportSingleSlideAsPng,
   type ExportProgress 
 } from './utils/exporter';
+import { verifyLicenseKey } from './utils/license';
 import { 
   Plus, 
   Trash2, 
@@ -90,7 +91,21 @@ export function App() {
     const saved = localStorage.getItem(SUBSCRIPTION_KEY);
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        // Security check: If isPro is set without a legitimate license key, reset to Free
+        if (parsed.isPro) {
+          const key = parsed.licenseKey?.trim();
+          const isBypassKey = !key || key.startsWith('STRIPE-') || ['FOUNDER100', 'PROPASS', 'GROWTH2026', 'VIP'].includes(key);
+          if (isBypassKey) {
+            return {
+              isPro: false,
+              tier: 'free',
+              exportsToday: 0,
+              maxFreeExportsPerDay: 5,
+            };
+          }
+        }
+        return parsed;
       } catch (e) {
         console.error(e);
       }
@@ -112,14 +127,34 @@ export function App() {
     localStorage.setItem(SUBSCRIPTION_KEY, JSON.stringify(subscription));
   }, [subscription]);
 
-  // Listen for return from Stripe / Lemon Squeezy checkout via URL query params
+  // Verify license key on initial boot if user is marked Pro
+  useEffect(() => {
+    if (subscription.isPro && subscription.licenseKey) {
+      verifyLicenseKey(subscription.licenseKey).then(res => {
+        if (!res.valid) {
+          setSubscription({
+            isPro: false,
+            tier: 'free',
+            exportsToday: 0,
+            maxFreeExportsPerDay: 5,
+          });
+          setProject(prev => ({ ...prev, showWatermark: true }));
+        }
+      });
+    }
+  }, []);
+
+  // Listen for return from Lemon Squeezy with license key in query params
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const isSuccess = params.get('checkout_success') === 'true' || params.get('success') === 'true';
-    const tier = (params.get('tier') as 'pro' | 'lifetime') || 'lifetime';
+    const licenseKey = params.get('license_key') || params.get('key');
 
-    if (isSuccess && !subscription.isPro) {
-      handleUpgrade(tier, `STRIPE-${Date.now().toString(36).toUpperCase()}`);
+    if (licenseKey && !subscription.isPro) {
+      verifyLicenseKey(licenseKey).then(res => {
+        if (res.valid) {
+          handleUpgrade(res.tier || 'lifetime', licenseKey);
+        }
+      });
       // Clean query string
       window.history.replaceState({}, document.title, window.location.pathname);
     }

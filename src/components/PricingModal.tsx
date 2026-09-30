@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { UserSubscription } from '../types';
 import { PAYMENT_CONFIG } from '../config/payments';
 import { triggerConfetti } from '../utils/exporter';
+import { verifyLicenseKey } from '../utils/license';
 import { 
   Check, 
   Zap, 
@@ -11,7 +12,8 @@ import {
   CreditCard, 
   Key, 
   ExternalLink,
-  RotateCcw
+  RotateCcw,
+  Loader2
 } from 'lucide-react';
 
 interface PricingModalProps {
@@ -29,22 +31,37 @@ export const PricingModal: React.FC<PricingModalProps> = ({
   onUpgrade,
   onResetToFree,
 }) => {
-  const [promoCode, setPromoCode] = useState('');
-  const [promoStatus, setPromoStatus] = useState<string | null>(null);
+  const [licenseKeyInput, setLicenseKeyInput] = useState('');
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [verifyStatus, setVerifyStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   if (!isOpen) return null;
 
-  const handleApplyKey = () => {
-    const clean = promoCode.trim().toUpperCase();
-    if (clean === 'FOUNDER100' || clean === 'PROPASS' || clean === 'GROWTH2026' || clean === 'VIP') {
-      onUpgrade('lifetime', clean);
-      triggerConfetti();
-      setPromoStatus('✅ Lifetime Pro License successfully activated!');
-      setTimeout(() => {
-        onClose();
-      }, 1200);
-    } else {
-      setPromoStatus('❌ Invalid license code. Try "FOUNDER100" or upgrade below.');
+  const handleActivateLicense = async () => {
+    if (!licenseKeyInput.trim()) {
+      setVerifyStatus({ type: 'error', message: 'Please enter your license key.' });
+      return;
+    }
+
+    setIsVerifying(true);
+    setVerifyStatus(null);
+
+    try {
+      const result = await verifyLicenseKey(licenseKeyInput.trim());
+      if (result.valid) {
+        onUpgrade(result.tier || 'lifetime', licenseKeyInput.trim());
+        triggerConfetti();
+        setVerifyStatus({ type: 'success', message: `✅ ${result.message}` });
+        setTimeout(() => {
+          onClose();
+        }, 1500);
+      } else {
+        setVerifyStatus({ type: 'error', message: `❌ ${result.message}` });
+      }
+    } catch {
+      setVerifyStatus({ type: 'error', message: '❌ Verification failed. Please check your internet connection.' });
+    } finally {
+      setIsVerifying(false);
     }
   };
 
@@ -83,7 +100,7 @@ export const PricingModal: React.FC<PricingModalProps> = ({
                   onClick={onResetToFree}
                   className="text-xs text-slate-400 hover:text-rose-400 underline flex items-center gap-1"
                 >
-                  <RotateCcw className="w-3 h-3" /> Reset to Free for testing
+                  <RotateCcw className="w-3 h-3" /> Reset to Free
                 </button>
               )}
             </div>
@@ -196,27 +213,34 @@ export const PricingModal: React.FC<PricingModalProps> = ({
         <div className="p-4 bg-slate-950/80 border border-slate-800 rounded-xl space-y-2">
           <div className="flex items-center justify-between text-xs">
             <span className="font-semibold text-slate-300 flex items-center gap-1.5">
-              <Key className="w-3.5 h-3.5 text-indigo-400" /> Have a license voucher?
+              <Key className="w-3.5 h-3.5 text-indigo-400" /> Have your Lemon Squeezy License Key?
             </span>
-            <span className="text-[11px] text-slate-500 font-mono">Promo: FOUNDER100</span>
+            <span className="text-[11px] text-slate-500">Check your purchase receipt email</span>
           </div>
           <div className="flex gap-2">
             <input
               type="text"
-              value={promoCode}
-              onChange={e => setPromoCode(e.target.value)}
-              placeholder="Enter license key..."
-              className="flex-1 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs font-mono text-white focus:outline-none focus:border-indigo-500"
+              value={licenseKeyInput}
+              onChange={e => setLicenseKeyInput(e.target.value)}
+              placeholder="Paste License Key (e.g. 12345678-ABCD-EFGH...)"
+              disabled={isVerifying}
+              className="flex-1 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs font-mono text-white focus:outline-none focus:border-indigo-500 disabled:opacity-50"
             />
             <button
-              onClick={handleApplyKey}
-              className="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-lg transition-colors"
+              onClick={handleActivateLicense}
+              disabled={isVerifying}
+              className="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 disabled:text-slate-500 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5"
             >
-              Activate
+              {isVerifying && <Loader2 className="w-3 h-3 animate-spin" />}
+              <span>{isVerifying ? 'Verifying...' : 'Activate License'}</span>
             </button>
           </div>
-          {promoStatus && (
-            <p className="text-xs font-medium pt-1 animate-fadeIn">{promoStatus}</p>
+          {verifyStatus && (
+            <p className={`text-xs font-medium pt-1 animate-fadeIn ${
+              verifyStatus.type === 'success' ? 'text-emerald-400' : 'text-rose-400'
+            }`}>
+              {verifyStatus.message}
+            </p>
           )}
         </div>
 
