@@ -22,6 +22,7 @@ import { FontModal } from './components/FontModal';
 import { ProjectsModal } from './components/ProjectsModal';
 import { SocialPreviewModal } from './components/SocialPreviewModal';
 import { CustomThemeModal } from './components/CustomThemeModal';
+import { AuthModal } from './components/AuthModal';
 import { 
   exportCarouselAsPdf, 
   exportCarouselAsZip, 
@@ -29,6 +30,13 @@ import {
   type ExportProgress 
 } from './utils/exporter';
 import { verifyLicenseKey } from './utils/license';
+import { 
+  supabase, 
+  signOut as supabaseSignOut, 
+  saveProjectToCloud, 
+  fetchUserProjectsFromCloud, 
+  fetchUserSubscription 
+} from './utils/supabase';
 import { 
   Plus, 
   Trash2, 
@@ -76,6 +84,9 @@ const createNewDefaultProject = (title?: string): Project => ({
 });
 
 export function App() {
+  // --- AUTH STATE ---
+  const [user, setUser] = useState<any | null>(null);
+
   // --- MULTI-PROJECT STATE ---
   const [allProjects, setAllProjects] = useState<Project[]>(() => {
     const saved = localStorage.getItem(ALL_PROJECTS_KEY);
@@ -122,6 +133,7 @@ export function App() {
   const [isProjectsModalOpen, setIsProjectsModalOpen] = useState(false);
   const [isSocialPreviewOpen, setIsSocialPreviewOpen] = useState(false);
   const [isCustomThemeModalOpen, setIsCustomThemeModalOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   // Subscription state
   const [subscription, setSubscription] = useState<UserSubscription>(() => {
@@ -154,7 +166,53 @@ export function App() {
     };
   });
 
-  // Sync state to local storage
+  // Supabase Auth & Cloud Data Sync Listener
+  useEffect(() => {
+    if (!supabase) return;
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      const activeUser = session?.user ?? null;
+      setUser(activeUser);
+      if (activeUser) {
+        fetchUserProjectsFromCloud(activeUser.id).then(cloudProjects => {
+          if (cloudProjects.length > 0) {
+            setAllProjects(cloudProjects);
+            setProject(cloudProjects[0]);
+          }
+        });
+        fetchUserSubscription(activeUser.id).then(sub => {
+          if (sub && sub.isPro) {
+            setSubscription(prev => ({
+              ...prev,
+              isPro: true,
+              tier: sub.tier || 'lifetime',
+              licenseKey: sub.licenseKey,
+            }));
+            setProject(p => ({ ...p, showWatermark: false }));
+          }
+        });
+      }
+    });
+
+    const { data: { subscription: authListener } } = supabase.auth.onAuthStateChange((_event, session) => {
+      const activeUser = session?.user ?? null;
+      setUser(activeUser);
+      if (activeUser) {
+        fetchUserProjectsFromCloud(activeUser.id).then(cloudProjects => {
+          if (cloudProjects.length > 0) {
+            setAllProjects(cloudProjects);
+            setProject(cloudProjects[0]);
+          }
+        });
+      }
+    });
+
+    return () => {
+      authListener.unsubscribe();
+    };
+  }, []);
+
+  // Sync state to local storage & cloud
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(project));
     setAllProjects(prev => {
@@ -165,7 +223,12 @@ export function App() {
       localStorage.setItem(ALL_PROJECTS_KEY, JSON.stringify(updated));
       return updated;
     });
-  }, [project]);
+
+    // Cloud backup if user is authenticated
+    if (user?.id) {
+      saveProjectToCloud(user.id, project);
+    }
+  }, [project, user]);
 
   useEffect(() => {
     localStorage.setItem(SUBSCRIPTION_KEY, JSON.stringify(subscription));
@@ -250,7 +313,7 @@ export function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [historyIndex, history]);
 
-  // Active theme resolution (supports custom theme)
+  // Active theme resolution
   const currentTheme = project.themeId === 'custom' && customTheme
     ? customTheme
     : THEMES.find(t => t.id === project.themeId) || THEMES[0];
@@ -450,6 +513,12 @@ export function App() {
         selectedFont={project.customFont || 'jakarta'}
         subscription={subscription}
         projectCount={allProjects.length}
+        user={user}
+        onOpenAuthModal={() => setIsAuthModalOpen(true)}
+        onSignOut={async () => {
+          await supabaseSignOut();
+          setUser(null);
+        }}
         onOpenProjects={() => setIsProjectsModalOpen(true)}
         onOpenFontModal={() => setIsFontModalOpen(true)}
         onOpenSocialPreview={() => setIsSocialPreviewOpen(true)}
@@ -787,6 +856,11 @@ export function App() {
       </div>
 
       {/* ALL MODALS */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+      />
+
       <AIGeneratorModal
         isOpen={isAIModalOpen}
         onClose={() => setIsAIModalOpen(false)}

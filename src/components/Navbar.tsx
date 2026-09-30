@@ -4,7 +4,7 @@ import {
   Sparkles, 
   Download, 
   Layers, 
-  User, 
+  User as UserIcon, 
   Crown, 
   ChevronDown, 
   FileText, 
@@ -12,7 +12,10 @@ import {
   Image as ImageIcon,
   Type,
   Eye,
-  Folder
+  Folder,
+  LogIn,
+  LogOut,
+  Cloud
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -23,6 +26,9 @@ interface NavbarProps {
   selectedFont: FontFamilyId;
   subscription: UserSubscription;
   projectCount: number;
+  user: any | null;
+  onOpenAuthModal: () => void;
+  onSignOut: () => void;
   onOpenProjects: () => void;
   onOpenFontModal: () => void;
   onOpenSocialPreview: () => void;
@@ -41,6 +47,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   onAspectRatioChange,
   subscription,
   projectCount,
+  user,
+  onOpenAuthModal,
+  onSignOut,
   onOpenProjects,
   onOpenFontModal,
   onOpenSocialPreview,
@@ -54,6 +63,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   isExporting,
 }) => {
   const [showExportMenu, setShowExportMenu] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const ratios: { id: AspectRatio; label: string; sub: string }[] = [
     { id: '4:5', label: '4:5', sub: 'LinkedIn/IG' },
@@ -79,7 +89,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 onClick={onOpenProjects}
                 title="Manage Decks"
-                className="flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-indigo-300 border border-slate-800 transition-colors"
+                className="flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-indigo-300 border border-slate-800 transition-colors cursor-pointer"
               >
                 <Folder className="w-3 h-3 text-indigo-400" />
                 <span>Decks ({projectCount})</span>
@@ -136,7 +146,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Typography / Font Button */}
           <button
             onClick={onOpenFontModal}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-medium transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-medium transition-colors cursor-pointer"
             title="Change Typography"
           >
             <Type className="w-3.5 h-3.5 text-indigo-400" />
@@ -146,17 +156,17 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Social Simulator */}
           <button
             onClick={onOpenSocialPreview}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-medium transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-medium transition-colors cursor-pointer"
             title="Preview in Feed"
           >
             <Eye className="w-3.5 h-3.5 text-indigo-400" />
-            <span className="hidden md:inline">Feed Preview</span>
+            <span className="hidden md:inline">Preview</span>
           </button>
 
           {/* Templates */}
           <button
             onClick={onOpenTemplates}
-            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-medium transition-colors"
+            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-medium transition-colors cursor-pointer"
           >
             <Layers className="w-3.5 h-3.5 text-indigo-400" />
             <span>Templates</span>
@@ -165,16 +175,16 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Brand Kit */}
           <button
             onClick={onOpenBrandKit}
-            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-medium transition-colors"
+            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-medium transition-colors cursor-pointer"
           >
-            <User className="w-3.5 h-3.5 text-indigo-400" />
+            <UserIcon className="w-3.5 h-3.5 text-indigo-400" />
             <span className="hidden lg:inline">Brand Kit</span>
           </button>
 
           {/* Upgrade CTA / Pricing */}
           <button
             onClick={onOpenPricing}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               subscription.isPro
                 ? 'bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/30'
                 : 'bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 animate-pulse'
@@ -183,6 +193,65 @@ export const Navbar: React.FC<NavbarProps> = ({
             <Crown className="w-3.5 h-3.5 text-amber-400" />
             <span>{subscription.isPro ? 'Pro Active' : 'Upgrade'}</span>
           </button>
+
+          {/* USER CLOUD AUTH BUTTON */}
+          {user ? (
+            <div className="relative">
+              <button
+                onClick={() => setShowUserMenu(!showUserMenu)}
+                className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 transition-colors cursor-pointer"
+              >
+                {user.user_metadata?.avatar_url ? (
+                  <img
+                    src={user.user_metadata.avatar_url}
+                    alt={user.email}
+                    className="w-6 h-6 rounded-lg object-cover"
+                  />
+                ) : (
+                  <div className="w-6 h-6 rounded-lg bg-indigo-600 flex items-center justify-center text-white text-[10px] font-bold">
+                    {(user.email || 'U')[0].toUpperCase()}
+                  </div>
+                )}
+                <ChevronDown className="w-3 h-3 text-slate-400" />
+              </button>
+
+              {showUserMenu && (
+                <div
+                  onMouseLeave={() => setShowUserMenu(false)}
+                  className="absolute right-0 mt-2 w-52 bg-slate-900 border border-slate-800 rounded-2xl p-2 shadow-2xl space-y-1 z-50 text-xs animate-fadeIn"
+                >
+                  <div className="px-3 py-2 border-b border-slate-800/80">
+                    <div className="font-bold text-white truncate">{user.user_metadata?.full_name || 'Cloud Creator'}</div>
+                    <div className="text-[10px] text-slate-400 truncate">{user.email}</div>
+                  </div>
+
+                  <div className="px-3 py-1.5 text-[10px] text-emerald-400 font-medium flex items-center gap-1.5">
+                    <Cloud className="w-3.5 h-3.5" />
+                    <span>Cloud Sync Active</span>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      setShowUserMenu(false);
+                      onSignOut();
+                    }}
+                    className="w-full flex items-center gap-2 p-2 rounded-xl text-left hover:bg-slate-800 text-rose-400 transition-colors"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Sign Out</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              onClick={onOpenAuthModal}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600/10 hover:bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 text-xs font-semibold transition-colors cursor-pointer"
+            >
+              <LogIn className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Sign In</span>
+            </button>
+          )}
 
           {/* EXPORT DROPDOWN */}
           <div className="relative">
