@@ -56,7 +56,7 @@ export const MonetizationGuideModal: React.FC<MonetizationGuideModalProps> = ({
                 Path A: Recurring Subscriptions
               </div>
               <p className="text-slate-400">
-                <strong className="text-slate-200">36 active subscribers</strong> @ $12/month (or 48 @ $9/mo) = <span className="text-emerald-400 font-bold">$432/month recurring</span>.
+                <strong className="text-slate-200">50 active subscribers</strong> @ $5.99/month (₹499/mo) = <span className="text-emerald-400 font-bold">~$300/month recurring</span>.
               </p>
             </div>
             <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
@@ -102,7 +102,7 @@ export const MonetizationGuideModal: React.FC<MonetizationGuideModalProps> = ({
                 <span className="text-indigo-400 text-[11px] font-mono">5 Min Setup</span>
               </div>
               <p className="text-slate-400 leading-relaxed">
-                Create a payment link on <strong>Lemon Squeezy</strong> or <strong>Stripe Payment Links</strong> ($9/mo recurring + $29 lifetime). Update the checkout button in <code className="bg-slate-900 px-1 py-0.5 rounded text-indigo-300">PricingModal.tsx</code>.
+                Create a payment link on <strong>Lemon Squeezy</strong> or <strong>Stripe Payment Links</strong> ($5.99/mo [₹499] recurring + $29 lifetime). Update the checkout button in <code className="bg-slate-900 px-1 py-0.5 rounded text-indigo-300">PricingModal.tsx</code>.
               </p>
             </div>
 

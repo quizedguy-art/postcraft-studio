@@ -119,7 +119,7 @@ export const PricingModal: React.FC<PricingModalProps> = ({
                 </span>
               </div>
               <div className="mt-4 flex items-baseline gap-1">
-                <span className="text-3xl font-black text-white">$9</span>
+                <span className="text-3xl font-black text-white">$5.99</span>
                 <span className="text-xs text-slate-400 font-medium">/ month (₹499)</span>
               </div>
               <p className="text-xs text-slate-400 mt-1">Cancel anytime with 1-click.</p>
@@ -150,7 +150,7 @@ export const PricingModal: React.FC<PricingModalProps> = ({
               rel="noopener noreferrer"
               className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs transition-colors border border-slate-700 flex items-center justify-center gap-1.5 cursor-pointer text-center no-underline"
             >
-              <span>Pay & Start $9/mo Pro</span>
+              <span>Pay & Start $5.99/mo Pro (₹499)</span>
               <ExternalLink className="w-3.5 h-3.5 opacity-60" />
             </a>
           </div>

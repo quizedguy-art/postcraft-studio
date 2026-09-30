@@ -22,8 +22,8 @@ export const PAYMENT_CONFIG: PaymentConfig = {
   currency: '$',
   
   monthlyPro: {
-    price: 9,
-    priceLabel: '$9/month',
+    price: 5.99,
+    priceLabel: '$5.99/month (₹499)',
     checkoutUrl: 'https://postcraftstudioapp.lemonsqueezy.com/checkout/buy/3f9e9567-7d66-47bb-9d17-35fe5f23b10f',
   },
 
