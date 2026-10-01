@@ -174,10 +174,15 @@ export function App() {
       const activeUser = session?.user ?? null;
       setUser(activeUser);
       if (activeUser) {
+        if (window.location.hash && window.location.hash.includes('access_token')) {
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }
         fetchUserProjectsFromCloud(activeUser.id).then(cloudProjects => {
           if (cloudProjects.length > 0) {
             setAllProjects(cloudProjects);
             setProject(cloudProjects[0]);
+          } else {
+            saveProjectToCloud(activeUser.id, project);
           }
         });
         fetchUserSubscription(activeUser.id).then(sub => {
@@ -198,10 +203,15 @@ export function App() {
       const activeUser = session?.user ?? null;
       setUser(activeUser);
       if (activeUser) {
+        if (window.location.hash && window.location.hash.includes('access_token')) {
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }
         fetchUserProjectsFromCloud(activeUser.id).then(cloudProjects => {
           if (cloudProjects.length > 0) {
             setAllProjects(cloudProjects);
             setProject(cloudProjects[0]);
+          } else {
+            saveProjectToCloud(activeUser.id, project);
           }
         });
       }

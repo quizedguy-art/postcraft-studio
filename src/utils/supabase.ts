@@ -83,6 +83,23 @@ export async function saveProjectToCloud(userId: string, project: Project) {
 }
 
 /**
+ * Delete Project from Cloud Database
+ */
+export async function deleteProjectFromCloud(projectId: string) {
+  if (!supabase) return null;
+
+  const { data, error } = await supabase
+    .from('projects')
+    .delete()
+    .eq('id', projectId);
+
+  if (error) {
+    console.error('Error deleting project from cloud:', error);
+  }
+  return data;
+}
+
+/**
  * Fetch All User Projects from Cloud
  */
 export async function fetchUserProjectsFromCloud(userId: string): Promise<Project[]> {
@@ -133,4 +150,26 @@ export async function fetchUserSubscription(userId: string): Promise<Partial<Use
     tier: data.subscription_tier || (data.is_pro ? 'lifetime' : 'free'),
     licenseKey: data.license_key,
   };
+}
+
+/**
+ * Save User Subscription to Cloud Profile
+ */
+export async function saveUserSubscriptionToCloud(userId: string, subscription: UserSubscription) {
+  if (!supabase) return null;
+
+  const { data, error } = await supabase
+    .from('profiles')
+    .upsert({
+      id: userId,
+      is_pro: subscription.isPro,
+      subscription_tier: subscription.tier,
+      license_key: subscription.licenseKey || null,
+      updated_at: new Date().toISOString(),
+    });
+
+  if (error) {
+    console.error('Error saving subscription to cloud:', error);
+  }
+  return data;
 }
