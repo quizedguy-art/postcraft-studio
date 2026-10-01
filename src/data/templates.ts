@@ -13,7 +13,7 @@ export const TEMPLATES: Template[] = [
         type: 'cover',
         tag: '🚀 Micro-SaaS Blueprint',
         headline: '7 Hard Truths About Making Your First $1,000 Online',
-        subtitle: 'Most founders fail because they build before they distribute. Here is what actually works.',
+        subtitle: 'Most founders fail because they build before they distribute. Here is what actually works in 2026.',
         highlightText: '$1,000 Online',
         alignment: 'left',
       },
@@ -24,9 +24,9 @@ export const TEMPLATES: Template[] = [
         headline: 'Solve An Expensive Pain, Not An Interesting Idea',
         body: 'People don’t pay for "nice-to-have" widgets. They pay to make more money, save 5 hours a week, or avoid looking foolish to their boss.',
         bulletPoints: [
-          'Audit who has the budget before writing code',
-          'B2B always converts 5x faster than B2C',
-          'If no competitor exists, demand might not exist either'
+          'Audit who has the budget before writing a single line of code',
+          'B2B always converts 5x faster with higher willingness to pay',
+          'If no competitor exists, buyer demand might not exist either'
         ],
       },
       {
@@ -46,18 +46,72 @@ export const TEMPLATES: Template[] = [
         type: 'tweet',
         tag: 'Mindset Shift',
         headline: 'Distribution Beats Product Quality Every Single Time',
-        body: 'The worst product with great distribution will always crush the best product nobody has ever heard of.\n\nSpend 50% of your time building, and 50% building audience in public.',
-        quoteAuthor: 'Alex Hormozi / Indie Principle',
+        body: 'The worst product with great distribution will always crush the best product nobody has ever heard of.\n\nSpend 50% of your time building, and 50% building your distribution engine in public.',
+        quoteAuthor: 'Indie Creator Rule',
       },
       {
         id: 's5',
         type: 'cta',
         tag: 'Next Steps',
         headline: 'Want the full step-by-step launch checklist?',
-        subtitle: 'Swipe down or check the link in the comments for my free Notion operating system.',
+        subtitle: 'Save this post for later and follow for weekly tactical breakdowns.',
         ctaButtonText: 'Get the Free Checklist ⚡',
         ctaButtonLink: 'slideforge.io/checklist',
       },
+    ],
+  },
+  {
+    id: 'weekly-revenue-roadmap',
+    title: 'The $100/Week Solopreneur Growth Engine',
+    description: 'A realistic tactical guide to turning high-retention visual posts into paying customers.',
+    category: 'growth',
+    badge: 'Revenue',
+    slides: [
+      {
+        id: 'r1',
+        type: 'cover',
+        tag: '💰 Cashflow Playbook',
+        headline: 'How To Generate $100/Week From Niche Digital Tools',
+        subtitle: 'No complex pitch decks or VC capital. Just dead-simple utility products solving clear problems.',
+      },
+      {
+        id: 'r2',
+        type: 'content',
+        tag: 'Step 01 // The Offer',
+        headline: 'Create a Single-Feature "No-Brainer" Tool',
+        body: 'Large multi-feature suites overwhelm users. Focus entirely on one high-frequency bottleneck:',
+        bulletPoints: [
+          'Social carousel & deck exporter (SlideForge model)',
+          'AI transcript cleaner or prompt rewriter',
+          'Automated invoice & receipt generator for freelancers'
+        ],
+      },
+      {
+        id: 'r3',
+        type: 'stats',
+        tag: 'The Math',
+        headline: 'Two Proven Paths to $400 - $500/Month',
+        stats: [
+          { value: '17', label: 'Monthly Subs', subtext: '@ $5.99/mo (₹499)' },
+          { value: '4', label: 'Founder Sales/Wk', subtext: '@ $29 One-Time' },
+          { value: '100%', label: 'Direct to Bank', subtext: 'via Lemon Squeezy' },
+        ],
+      },
+      {
+        id: 'r4',
+        type: 'content',
+        tag: 'Step 02 // Distribution',
+        headline: 'Turn Every Export Into Free Marketing',
+        body: 'Embed a subtle brand badge on free exports. When your users share their carousels on LinkedIn, their audience sees your tool and signs up automatically.',
+      },
+      {
+        id: 'r5',
+        type: 'cta',
+        tag: 'Take Action',
+        headline: 'Ready to build your first profitable micro-asset?',
+        subtitle: 'Bookmark this post and start creating visual decks in seconds.',
+        ctaButtonText: 'Start Creating Free 🚀',
+      }
     ],
   },
   {
