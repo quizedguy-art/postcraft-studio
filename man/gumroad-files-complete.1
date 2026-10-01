@@ -1,0 +1,92 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-files-complete - Finalize an upload that hit an ambiguous /files/complete failure
+
+
+.SH SYNOPSIS
+\fBgumroad files complete [flags]\fP
+
+
+.SH DESCRIPTION
+Replay /files/complete with a saved recovery manifest so an upload that left \fBupload\fR with a complete_state_unknown error can be finalized without re-uploading any bytes.
+
+.PP
+The manifest is the \fB\&.error.recovery\fR object from a failed --json upload, or a plain {"upload_id": ..., "key": ..., "completed_parts": [...]} JSON document. Pass \fB-\fR to read from stdin.
+
+.PP
+If the manifest includes a file_url, the upload may have already committed on the server; the command will prompt for confirmation (or require --yes) before replaying /files/complete, since a blind re-finalize can duplicate the attachment.
+
+
+.SH OPTIONS
+\fB-h\fP, \fB--help\fP[=false]
+	help for complete
+
+.PP
+\fB--recovery\fP=""
+	Path to the recovery manifest JSON (use \fB-\fR for stdin) (required)
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad files upload ./pack.zip --json > err.json
+  jq '.error.recovery' err.json > recovery.json
+  gumroad files complete --recovery recovery.json
+  # When piping on stdin, --yes is required because the manifest consumes the
+  # only input stream and the duplicate-risk prompt has nowhere to read from:
+  jq '.error.recovery' err.json | gumroad files complete --recovery - --yes
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-files(1)\fP

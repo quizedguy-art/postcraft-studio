@@ -1,0 +1,140 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-upsells-update - Update an upsell or cross-sell
+
+
+.SH SYNOPSIS
+\fBgumroad upsells update  [flags]\fP
+
+
+.SH DESCRIPTION
+Update an upsell or cross-sell.
+
+.PP
+Only the fields you pass are changed; everything else keeps its current value.
+Pass --remove-offer to drop the discount. Passing --selected-product or
+--offer-variant replaces the existing set.
+
+
+.SH OPTIONS
+\fB--amount\fP=""
+	Flat discount on the offered product (e.g. 5, 5.00)
+
+.PP
+\fB--cross-sell\fP[=false]
+	Whether this is a cross-sell
+
+.PP
+\fB--description\fP=""
+	Description shown to the buyer
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for update
+
+.PP
+\fB--name\fP=""
+	Upsell name
+
+.PP
+\fB--offer-variant\fP=[]
+	Version upgrade as : (repeatable, replaces the current set)
+
+.PP
+\fB--paused\fP[=false]
+	Pause or unpause the upsell
+
+.PP
+\fB--percent-off\fP=0
+	Percentage discount on the offered product
+
+.PP
+\fB--product\fP=""
+	Offered product ID
+
+.PP
+\fB--remove-offer\fP[=false]
+	Remove the discount from the upsell
+
+.PP
+\fB--replace-selected-products\fP[=false]
+	Replace the selected products in the cart with the offered product
+
+.PP
+\fB--selected-product\fP=[]
+	Product ID whose buyers see the cross-sell (repeatable, replaces the current set)
+
+.PP
+\fB--text\fP=""
+	Headline shown to the buyer
+
+.PP
+\fB--universal\fP[=false]
+	Offer the cross-sell to buyers of every product
+
+.PP
+\fB--variant\fP=""
+	Offered version ID of the offered product (cross-sell)
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad upsells update <id> --name "New name"
+  gumroad upsells update <id> --percent-off 25
+  gumroad upsells update <id> --paused=false
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-upsells(1)\fP

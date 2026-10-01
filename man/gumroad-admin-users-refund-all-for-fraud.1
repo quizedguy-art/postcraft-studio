@@ -1,0 +1,113 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-admin-users-refund-all-for-fraud - Queue fraud refunds for every remaining purchase of a suspended seller
+
+
+.SH SYNOPSIS
+\fBgumroad admin users refund-all-for-fraud [flags]\fP
+
+
+.SH DESCRIPTION
+Queue refunds for all successful, non-refunded purchases of a suspended seller
+as fraud. The server validates and enqueues a background job; refunds are
+processed asynchronously with per-purchase retries. Completion is recorded as a
+comment on the seller account and in the admin audit log.
+
+.PP
+By default buyers are NOT blocked (seller-fraud case: the buyers are victims).
+Pass --block-buyers only when the buyers themselves are fraudulent (self-purchase
+or card-testing ring); that variant also blocks each buyer's email, card
+fingerprint, browser, and IP platform-wide.
+
+.PP
+--expected-email and --expected-count are required stale-state guards: the server
+responds 409 if either does not match the current account state. The seller must
+already be suspended; suspend first with 'gumroad admin users suspend'.
+
+.PP
+Requires the bulk endpoint POST /internal/admin/users/refund_all_for_fraud on
+the Gumroad API.
+
+
+.SH OPTIONS
+\fB--block-buyers\fP[=false]
+	Also block every buyer platform-wide (only for buyer-fraud cases like card-testing rings)
+
+.PP
+\fB--expected-count\fP=0
+	Expected number of refundable purchases (required; the server rejects a mismatch)
+
+.PP
+\fB--expected-email\fP=""
+	Optional current email guard
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for refund-all-for-fraud
+
+.PP
+\fB--user-id\fP=""
+	User external ID (required)
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad admin users refund-all-for-fraud --user-id 2245593582708 --expected-email seller@example.com --expected-count 18 --dry-run
+  gumroad admin users refund-all-for-fraud --user-id 2245593582708 --expected-email seller@example.com --expected-count 18 --yes
+  gumroad admin users refund-all-for-fraud --user-id 2245593582708 --expected-email seller@example.com --expected-count 18 --block-buyers --yes
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-admin-users(1)\fP

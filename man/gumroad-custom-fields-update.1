@@ -1,0 +1,89 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-custom-fields-update - Update a custom field
+
+
+.SH SYNOPSIS
+\fBgumroad custom-fields update [flags]\fP
+
+
+.SH DESCRIPTION
+Update a custom field
+
+
+.SH OPTIONS
+\fB-h\fP, \fB--help\fP[=false]
+	help for update
+
+.PP
+\fB--name\fP=""
+	Field name (required)
+
+.PP
+\fB--product\fP=""
+	Product ID (required)
+
+.PP
+\fB--required\fP[=false]
+	Make field required
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad custom-fields update --name <value> --product <value>
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-custom-fields(1)\fP

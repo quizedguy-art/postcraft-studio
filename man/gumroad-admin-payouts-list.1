@@ -1,0 +1,106 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-admin-payouts-list - List recent payouts for a user
+
+
+.SH SYNOPSIS
+\fBgumroad admin payouts list [flags]\fP
+
+
+.SH DESCRIPTION
+List recent payouts for a user as a compact table (id, amount, state, date,
+processor, destination).
+
+.PP
+Stripe and bank payouts also render a per-row detail block below the table with
+the Stripe transfer id and, for bank payouts, the destination bank account
+(routing/BIC number, account holder, account type, currency) so support can
+confirm where money landed without opening the Stripe dashboard. PayPal and
+debit-card payouts carry no bank account and are omitted from the detail block.
+
+.PP
+Identify the user with --email or --user-id.
+
+
+.SH OPTIONS
+\fB--cursor\fP=""
+	Pagination cursor (from a previous response)
+
+.PP
+\fB--email\fP=""
+	User email
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for list
+
+.PP
+\fB--limit\fP=0
+	Maximum results per page (default 20)
+
+.PP
+\fB--user-id\fP=""
+	User external ID
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad admin payouts list --email seller@example.com
+  gumroad admin payouts list --user-id 2245593582708
+  gumroad admin payouts list --email seller@example.com --json
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-admin-payouts(1)\fP

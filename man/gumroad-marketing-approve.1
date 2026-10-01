@@ -1,0 +1,84 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-marketing-approve - Approve this action without posting. Review the exact text, account handle, and link first.
+
+
+.SH SYNOPSIS
+\fBgumroad marketing approve  [flags]\fP
+
+
+.SH DESCRIPTION
+Approve this action without posting. Review the exact text, account handle, and link first.
+
+.PP
+The confirmation preview uses quoted strings so control characters cannot hide content. --yes explicitly confirms for scripts and MCP clients; approve and schedule also require --confirmation-token from the preview the seller reviewed. --dry-run still fetches the action for its preview, but sends no mutation. Human and plain output include the server's reconnect path and manual-share URL after the error code when available.
+
+
+.SH OPTIONS
+\fB--confirmation-token\fP=""
+	Token from the reviewed action (required with --yes for approve and schedule)
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for approve
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad marketing approve <action>
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-marketing(1)\fP

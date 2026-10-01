@@ -1,0 +1,116 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-admin-payouts-issue - Issue a manual payout for a seller
+
+
+.SH SYNOPSIS
+\fBgumroad admin payouts issue [flags]\fP
+
+
+.SH DESCRIPTION
+Issue a manual payout for a seller through Stripe or PayPal.
+
+.PP
+The --through date is the payout period end date and must be in the past
+(YYYY-MM-DD). --split is only valid with --processor paypal and asks the
+server to split the payout amount across multiple PayPal transfers.
+
+.PP
+--force releases a balance below the $100 payout minimum (e.g. a compliant
+creator discontinuing a product who won't reach the threshold). Without it,
+sub-minimum balances are rejected, unchanged.
+
+.PP
+This moves money. --yes is required.
+
+
+.SH OPTIONS
+\fB--expected-email\fP=""
+	Optional current email guard
+
+.PP
+\fB--force\fP[=false]
+	Release a balance below the $100 payout minimum
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for issue
+
+.PP
+\fB--processor\fP=""
+	Payout processor: stripe or paypal (required)
+
+.PP
+\fB--split\fP[=false]
+	Split the amount across multiple PayPal transfers (paypal only)
+
+.PP
+\fB--through\fP=""
+	Payout period end date in YYYY-MM-DD (required, must be in the past)
+
+.PP
+\fB--user-id\fP=""
+	User external ID (required)
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad admin payouts issue --user-id 2245593582708 --through 2026-04-30 --processor stripe --yes
+  gumroad admin payouts issue --user-id 2245593582708 --expected-email seller@example.com --through 2026-04-30 --processor paypal --split --yes
+  gumroad admin payouts issue --user-id 2245593582708 --through 2026-04-30 --processor stripe --force --yes
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-admin-payouts(1)\fP

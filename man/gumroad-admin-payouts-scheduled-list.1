@@ -1,0 +1,104 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-admin-payouts-scheduled-list - List ScheduledPayout rows
+
+
+.SH SYNOPSIS
+\fBgumroad admin payouts scheduled list [flags]\fP
+
+
+.SH DESCRIPTION
+List ScheduledPayout rows. Filter by --status (pending, executed,
+cancelled, flagged, held); repeat --status to match any of several values.
+Filter to a single user with --email, --user-id, or --external-id. Default
+limit is 20, capped server-side at 50.
+
+
+.SH OPTIONS
+\fB--cursor\fP=""
+	Pagination cursor (from a previous response)
+
+.PP
+\fB--email\fP=""
+	User email
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for list
+
+.PP
+\fB--limit\fP=0
+	Maximum results to return (default 20, capped at 50)
+
+.PP
+\fB--status\fP=[]
+	Filter by status: pending, executed, cancelled, flagged, held (repeatable)
+
+.PP
+\fB--user-id\fP=""
+	User external ID
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad admin payouts scheduled list
+  gumroad admin payouts scheduled list --status flagged
+  gumroad admin payouts scheduled list --status held --status flagged
+  gumroad admin payouts scheduled list --user-id 2245593582708
+  gumroad admin payouts scheduled list --status pending --limit 50 --json
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-admin-payouts-scheduled(1)\fP

@@ -1,0 +1,105 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-admin-users-mark-compliant - Mark a user compliant as an admin
+
+
+.SH SYNOPSIS
+\fBgumroad admin users mark-compliant [flags]\fP
+
+
+.SH DESCRIPTION
+Mark a user compliant through the internal admin API.
+
+.PP
+Identify the user with --user-id. Pass --expected-email as an optional guard
+against acting on an account whose email has changed.
+
+.PP
+If the account is suspended, pass --clear-suspension to also lift the suspension.
+Without it the request is refused, so a review that only looked at its own signals
+cannot silently put a suspended seller's products back on sale.
+
+
+.SH OPTIONS
+\fB--clear-suspension\fP[=false]
+	Also lift the account's suspension (required when the account is suspended)
+
+.PP
+\fB--expected-email\fP=""
+	Optional current email guard
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for mark-compliant
+
+.PP
+\fB--note\fP=""
+	Optional admin note
+
+.PP
+\fB--user-id\fP=""
+	User external ID (required)
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad admin users mark-compliant --user-id 2245593582708
+  gumroad admin users mark-compliant --user-id 2245593582708 --expected-email seller@example.com
+  gumroad admin users mark-compliant --user-id 2245593582708 --note "Cleared after review"
+  gumroad admin users mark-compliant --user-id 2245593582708 --clear-suspension --note "Suspension lifted after appeal"
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-admin-users(1)\fP

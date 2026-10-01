@@ -1,0 +1,101 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-admin-users - Read and manage admin user records
+
+
+.SH SYNOPSIS
+\fBgumroad admin users [flags]\fP
+
+
+.SH DESCRIPTION
+Read and manage admin user records
+
+
+.SH OPTIONS
+\fB-h\fP, \fB--help\fP[=false]
+	help for users
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad admin users info --email user@example.com
+  gumroad admin users info --user-id 2245593582708
+  gumroad admin users info --username sellerone
+  gumroad admin users social-connections --user-id 2245593582708
+  gumroad admin users affiliates --user-id 2245593582708 --direction granted
+  gumroad admin users comments list --user-id 2245593582708
+  gumroad admin users comments add --user-id 2245593582708 --content "VAT exempt confirmed"
+  gumroad admin users compliance --user-id 2245593582708
+  gumroad admin users credits list --user-id 2245593582708
+  gumroad admin users credits add --user-id 2245593582708 --amount-cents 1000 --reason "Goodwill for checkout bug" --dry-run
+  gumroad admin users radar --user-id 2245593582708
+  gumroad admin users purchases --user-id 2245593582708 --status successful
+  gumroad admin users related --email user@example.com --signal ip --signal payment_address
+  gumroad admin users suspension --email user@example.com
+  gumroad admin users mark-compliant --user-id 2245593582708 --expected-email user@example.com
+  gumroad admin users watch --user-id 2245593582708 --revenue-threshold 200 --note "Review next buyers"
+  gumroad admin users update-watch --user-id 2245593582708 --revenue-threshold 500
+  gumroad admin users unwatch --user-id 2245593582708
+  gumroad admin users suspend --user-id 2245593582708 --note "Chargeback risk confirmed"
+  gumroad admin users suspend-for-tos-violation --user-id 2245593582708 --note "DMCA takedown notice confirmed"
+  gumroad admin users refund-balance --user-id 2245593582708 --expected-email user@example.com --dry-run
+  gumroad admin users refund-all-for-fraud --user-id 2245593582708 --expected-email user@example.com --expected-count 18 --yes
+  gumroad admin users reset-password --user-id 2245593582708
+  gumroad admin users update-email --user-id 2245593582708 --new-email new@example.com
+  gumroad admin users two-factor disable --user-id 2245593582708
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-admin(1)\fP, \fBgumroad-admin-users-affiliates(1)\fP, \fBgumroad-admin-users-comments(1)\fP, \fBgumroad-admin-users-compliance(1)\fP, \fBgumroad-admin-users-credits(1)\fP, \fBgumroad-admin-users-info(1)\fP, \fBgumroad-admin-users-mark-compliant(1)\fP, \fBgumroad-admin-users-purchases(1)\fP, \fBgumroad-admin-users-radar(1)\fP, \fBgumroad-admin-users-refund-all-for-fraud(1)\fP, \fBgumroad-admin-users-refund-balance(1)\fP, \fBgumroad-admin-users-related(1)\fP, \fBgumroad-admin-users-reset-password(1)\fP, \fBgumroad-admin-users-social-connections(1)\fP, \fBgumroad-admin-users-suspend(1)\fP, \fBgumroad-admin-users-suspend-for-tos-violation(1)\fP, \fBgumroad-admin-users-suspension(1)\fP, \fBgumroad-admin-users-two-factor(1)\fP, \fBgumroad-admin-users-unwatch(1)\fP, \fBgumroad-admin-users-update-email(1)\fP, \fBgumroad-admin-users-update-watch(1)\fP, \fBgumroad-admin-users-watch(1)\fP

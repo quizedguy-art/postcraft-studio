@@ -1,0 +1,100 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-sales-export - Request an emailed sales CSV export
+
+
+.SH SYNOPSIS
+\fBgumroad sales export [flags]\fP
+
+
+.SH DESCRIPTION
+Request an emailed sales CSV export
+
+
+.SH OPTIONS
+\fB--after\fP=""
+	Alias for --from
+
+.PP
+\fB--before\fP=""
+	Alias for --to
+
+.PP
+\fB--from\fP=""
+	Export sales from date (YYYY-MM-DD)
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for export
+
+.PP
+\fB--product\fP=""
+	Filter by product ID
+
+.PP
+\fB--to\fP=""
+	Export sales to date (YYYY-MM-DD)
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad sales export --from 2026-01-01 --to 2026-05-21
+  gumroad sales export --after 2026-01-01 --before 2026-05-21
+  gumroad sales export --product <id>
+  gumroad sales export --json
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-sales(1)\fP

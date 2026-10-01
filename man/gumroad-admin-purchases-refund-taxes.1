@@ -1,0 +1,107 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-admin-purchases-refund-taxes - Refund only the Gumroad-collected taxes on a purchase
+
+
+.SH SYNOPSIS
+\fBgumroad admin purchases refund-taxes  [flags]\fP
+
+
+.SH DESCRIPTION
+Refund the Gumroad-collected taxes on a purchase without touching the
+purchase price. The buyer email is required as a sanity check against
+the purchase record.
+
+.PP
+--note records an admin-side note alongside the tax refund. --business-vat-id
+attaches a buyer-supplied VAT ID to the refund record (commonly required
+when a B2B buyer needs the tax reversed because they self-account for VAT).
+--vat-exempt-territory marks the purchase's subscription as belonging to a
+buyer in an EU-VAT-exempt territory such as the Canary Islands, so every
+future renewal is charged without VAT. Use it when the buyer has no VAT ID
+to enter and their checkout connection geolocated to the mainland.
+
+
+.SH OPTIONS
+\fB--business-vat-id\fP=""
+	Buyer's business VAT ID
+
+.PP
+\fB--email\fP=""
+	Buyer email (required)
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for refund-taxes
+
+.PP
+\fB--note\fP=""
+	Admin note attached to the tax refund
+
+.PP
+\fB--vat-exempt-territory\fP[=false]
+	Mark the subscription as an EU-VAT-exempt territory buyer so renewals are charged without VAT
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad admin purchases refund-taxes 12345 --email buyer@example.com
+  gumroad admin purchases refund-taxes 12345 --email buyer@example.com --business-vat-id GB123456789
+  gumroad admin purchases refund-taxes 12345 --email buyer@example.com --note "buyer self-accounts for VAT"
+  gumroad admin purchases refund-taxes 12345 --email buyer@example.com --vat-exempt-territory --note "Canary Islands company"
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-admin-purchases(1)\fP

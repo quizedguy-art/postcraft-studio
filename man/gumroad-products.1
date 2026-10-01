@@ -1,0 +1,103 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-products - Manage products
+
+
+.SH SYNOPSIS
+\fBgumroad products [flags]\fP
+
+
+.SH DESCRIPTION
+Manage products.
+
+.PP
+Create, update, list, view, delete, publish, and unpublish products. New products are created as drafts; use \fBgumroad products publish <id>\fR to publish.
+
+
+.SH OPTIONS
+\fB-h\fP, \fB--help\fP[=false]
+	help for products
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad products list
+  gumroad products create --name "Art Pack" --price 10.00
+  gumroad products create --name "Art Pack" --file ./pack.zip --file-name "Art Pack.zip"
+  gumroad products create --name "Art Pack" --cover-image ./cover.jpg --thumbnail ./thumb.jpg
+  gumroad products categories --search figma
+  gumroad products comps --category design/ui-and-web/figma
+  gumroad products create --name "Figma Kit" --category design/ui-and-web/figma
+  gumroad products update <product_id> --name "New Name"
+  gumroad products update <product_id> --category design/ui-and-web/figma
+  gumroad products update <product_id> --preview-image ./gallery.jpg
+  gumroad products page preview <product_id> ./landing.html
+  gumroad products page publish <product_id> ./landing.html
+  gumroad products covers add <product_id> --image ./cover.jpg
+  gumroad products thumbnail set <product_id> --image ./thumb.jpg
+  gumroad products update <product_id> --file ./pack.zip
+  gumroad products content get <product_id> > content.json
+  gumroad products content get <product_id> --variant <variant_id> --category <cat_id> > content.json
+  gumroad products content set <product_id> content.json --dry-run
+  gumroad products view <id>
+  gumroad products url <id>
+  gumroad products publish <id>
+  gumroad products unpublish <id>
+  gumroad products delete <id>
+  gumroad products skus <id>
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad(1)\fP, \fBgumroad-products-categories(1)\fP, \fBgumroad-products-comps(1)\fP, \fBgumroad-products-content(1)\fP, \fBgumroad-products-covers(1)\fP, \fBgumroad-products-create(1)\fP, \fBgumroad-products-delete(1)\fP, \fBgumroad-products-list(1)\fP, \fBgumroad-products-page(1)\fP, \fBgumroad-products-publish(1)\fP, \fBgumroad-products-skus(1)\fP, \fBgumroad-products-thumbnail(1)\fP, \fBgumroad-products-unpublish(1)\fP, \fBgumroad-products-update(1)\fP, \fBgumroad-products-url(1)\fP, \fBgumroad-products-view(1)\fP

@@ -1,0 +1,93 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-emails-schedule - Schedule an audience email
+
+
+.SH SYNOPSIS
+\fBgumroad emails schedule  --at  [flags]\fP
+
+
+.SH DESCRIPTION
+Schedule an audience email to send at a future time.
+
+.PP
+The timestamp may be RFC3339 (e.g. 2026-06-18T14:00:00Z) or a naive
+seller-timezone time (e.g. 2026-06-18 14:00); the API resolves the latter in
+the seller's timezone. Calling schedule again with a different timestamp
+reschedules the email.
+
+
+.SH OPTIONS
+\fB--at\fP=""
+	When to send the email (required; RFC3339 or seller-timezone timestamp)
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for schedule
+
+.PP
+\fB--to-be-published-at\fP=""
+	Alias for --at
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad emails schedule <id> --at "2026-06-18T14:00:00Z"
+  gumroad emails schedule <id> --to-be-published-at "2026-06-18 14:00"
+  gumroad emails schedule <id> --at "2026-06-18T14:00:00Z" --json
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-emails(1)\fP

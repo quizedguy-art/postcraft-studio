@@ -1,0 +1,103 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-admin-products-list - List products owned by a seller
+
+
+.SH SYNOPSIS
+\fBgumroad admin products list [flags]\fP
+
+
+.SH DESCRIPTION
+List products owned by a seller, including soft-deleted products and the
+files attached to each product. Soft-deleted rows are returned with a (deleted)
+indicator instead of being filtered out so risk reviewers can see tombstones.
+
+.PP
+Identify the seller with --email or --external-id. Use --external-id when the
+seller is suspended-for-fraud, soft-deleted, or has had their email rotated,
+since those are the cases where the email path can't resolve them.
+
+
+.SH OPTIONS
+\fB--email\fP=""
+	Seller email (required unless --external-id is set)
+
+.PP
+\fB--external-id\fP=""
+	Seller external id (required unless --email is set)
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for list
+
+.PP
+\fB--page\fP=0
+	Page number (default 1)
+
+.PP
+\fB--per-page\fP=0
+	Results per page (default 10, max 100)
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad admin products list --email seller@example.com
+  gumroad admin products list --external-id 2245593582708
+  gumroad admin products list --email seller@example.com --page 2 --per-page 25
+  gumroad admin products list --email seller@example.com --json
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-admin-products(1)\fP

@@ -1,0 +1,87 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-pages - Manage your storefront pages
+
+
+.SH SYNOPSIS
+\fBgumroad pages [flags]\fP
+
+
+.SH DESCRIPTION
+Manage your storefront pages: the slugged pages that serve under your store at /\&.
+
+.PP
+The special slug "profile" is your profile landing page (your store's home page); \fBpages push profile\fR replaces it with custom HTML the same way \fBuser page publish\fR does.
+
+
+.SH OPTIONS
+\fB-h\fP, \fB--help\fP[=false]
+	help for pages
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad pages list
+  gumroad pages create --title "About" --slug about
+  gumroad pages create --title "About" ./about.html
+  gumroad pages pull about
+  gumroad pages scaffold about
+  gumroad pages push about ./about.html
+  gumroad pages push profile ./landing.html
+  gumroad pages preview ./about.html
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad(1)\fP, \fBgumroad-pages-create(1)\fP, \fBgumroad-pages-list(1)\fP, \fBgumroad-pages-preview(1)\fP, \fBgumroad-pages-pull(1)\fP, \fBgumroad-pages-push(1)\fP, \fBgumroad-pages-scaffold(1)\fP

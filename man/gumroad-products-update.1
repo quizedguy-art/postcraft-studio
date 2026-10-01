@@ -1,0 +1,180 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-products-update - Update a product
+
+
+.SH SYNOPSIS
+\fBgumroad products update  [flags]\fP
+
+
+.SH DESCRIPTION
+Update a product
+
+
+.SH OPTIONS
+\fB--category\fP=""
+	New product category path (for example: design/ui-and-web/figma)
+
+.PP
+\fB--cover-image\fP=""
+	Local JPEG, PNG, or GIF cover image to upload
+
+.PP
+\fB--currency\fP=""
+	New price currency (e.g. usd, eur)
+
+.PP
+\fB--custom-html\fP=""
+	Path to an HTML file for the product's custom landing page (empty string clears it)
+
+.PP
+\fB--custom-permalink\fP=""
+	New custom URL slug
+
+.PP
+\fB--custom-receipt\fP=""
+	New custom receipt text
+
+.PP
+\fB--custom-summary\fP=""
+	New short summary
+
+.PP
+\fB--description\fP=""
+	New HTML description
+
+.PP
+\fB--file\fP=[]
+	Add a local file to product content without replacing existing embeds (repeatable)
+
+.PP
+\fB--file-description\fP=[]
+	Description for the matching --file (repeatable)
+
+.PP
+\fB--file-name\fP=[]
+	Display name for the matching --file (repeatable)
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for update
+
+.PP
+\fB--max-purchase-count\fP=0
+	New maximum number of purchases
+
+.PP
+\fB--name\fP=""
+	New product name
+
+.PP
+\fB--pay-what-you-want\fP[=false]
+	Enable pay-what-you-want pricing
+
+.PP
+\fB--preview-image\fP=[]
+	Additional local JPEG, PNG, or GIF preview image to upload as a product cover (repeatable)
+
+.PP
+\fB--preview-video\fP=[]
+	Local MP4, MOV, M4V, MPEG, WMV, or WebM preview video to upload as a product cover (repeatable)
+
+.PP
+\fB--price\fP=""
+	New price (e.g. 10, 10.00, 9.99)
+
+.PP
+\fB--refund-fine-print\fP=""
+	Fine print for the product-level refund policy (empty string clears it)
+
+.PP
+\fB--refund-period\fP=""
+	Product-level refund period: inherit, none, 7, 14, 30, or 183 (inherit returns to the account default)
+
+.PP
+\fB--suggested-price\fP=""
+	New suggested price for pay-what-you-want (e.g. 5, 5.00)
+
+.PP
+\fB--tag\fP=[]
+	Tag (repeatable, replaces all existing tags)
+
+.PP
+\fB--taxonomy-id\fP=""
+	New numeric taxonomy/category ID
+
+.PP
+\fB--thumbnail\fP=""
+	Local JPEG, PNG, or GIF thumbnail image to upload
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad products update <id> --name "New Name"
+  gumroad products update <id> --price 15.00 --currency eur
+  gumroad products update <id> --category design/ui-and-web/figma
+  gumroad products update <id> --tag art --tag digital
+  gumroad products update <id> --cover-image ./cover.jpg
+  gumroad products update <id> --preview-image ./gallery-1.jpg --preview-image ./gallery-2.jpg
+  gumroad products update <id> --preview-video ./demo.mp4
+  gumroad products update <id> --file ./pack.zip
+  gumroad products update <id> --custom-html ./landing.html
+  gumroad products update <id> --custom-html ''
+  gumroad products update <id> --refund-period none --refund-fine-print "No refunds once downloaded."
+  gumroad products update <id> --refund-period inherit
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-products(1)\fP

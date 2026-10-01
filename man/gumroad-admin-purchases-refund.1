@@ -1,0 +1,111 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-admin-purchases-refund - Refund a purchase as an admin
+
+
+.SH SYNOPSIS
+\fBgumroad admin purchases refund  [flags]\fP
+
+
+.SH DESCRIPTION
+Refund a specific purchase end-to-end without going through the admin web UI.
+
+.PP
+The buyer email is required as a sanity check against the purchase. Without --amount,
+the entire purchase is refunded. --force bypasses the refund-policy timeframe and
+fine-print guards (the active-chargeback guard still applies). --cancel-subscription
+cancels the linked subscription after a successful refund.
+
+.PP
+A reason is required. It is stored on the refund and shown to the creator in the
+"A sale has been refunded" email so they know why Gumroad refunded the sale on
+their behalf.
+
+
+.SH OPTIONS
+\fB--amount\fP=""
+	Partial refund amount in displayed currency (e.g. 5, 5.00); omit for full refund
+
+.PP
+\fB--cancel-subscription\fP[=false]
+	Cancel the linked subscription after the refund succeeds
+
+.PP
+\fB--email\fP=""
+	Buyer email (required)
+
+.PP
+\fB--force\fP[=false]
+	Bypass refund-policy timeframe and fine-print guards
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for refund
+
+.PP
+\fB--reason\fP=""
+	Why the sale is being refunded; shown to the creator in the refund notification email (required)
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad admin purchases refund 12345 --email buyer@example.com --reason "Buyer reported being charged twice"
+  gumroad admin purchases refund 12345 --email buyer@example.com --amount 5.00 --reason "Partial refund agreed with buyer"
+  gumroad admin purchases refund 12345 --email buyer@example.com --force --reason "Product not delivered"
+  gumroad admin purchases refund 12345 --email buyer@example.com --cancel-subscription --reason "Buyer requested cancellation and refund"
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-admin-purchases(1)\fP

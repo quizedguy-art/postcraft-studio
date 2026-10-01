@@ -1,0 +1,90 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-admin-purchases-block-buyer - Block the buyer on a purchase as an admin
+
+
+.SH SYNOPSIS
+\fBgumroad admin purchases block-buyer  [flags]\fP
+
+
+.SH DESCRIPTION
+Block the buyer associated with a purchase. The buyer email is required as a
+sanity check against the purchase record. The block records an audit comment on
+the purchase; pass --comment to set its content (otherwise the server records a
+default comment).
+
+
+.SH OPTIONS
+\fB--comment\fP=""
+	Audit comment recorded against the purchase
+
+.PP
+\fB--email\fP=""
+	Buyer email (required)
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for block-buyer
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad admin purchases block-buyer 12345 --email buyer@example.com
+  gumroad admin purchases block-buyer 12345 --email buyer@example.com --comment "Refund abuse"
+  gumroad admin purchases block-buyer 12345 --email buyer@example.com --yes
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-admin-purchases(1)\fP

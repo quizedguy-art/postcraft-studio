@@ -1,0 +1,98 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-pages-pull - Download a page's custom HTML
+
+
+.SH SYNOPSIS
+\fBgumroad pages pull  [flags]\fP
+
+
+.SH DESCRIPTION
+Download the custom HTML a storefront page currently serves into a local file, so pull → edit → push is a real round trip: what you pull is exactly what was pushed.
+
+.PP
+Only pages that already have custom HTML can be pulled. For a rich-text page, or a profile without published custom HTML, use \fBgumroad pages scaffold\fR instead — it generates starter HTML from the page's current render.
+
+.PP
+Edit the file, check the result with \fBgumroad pages preview <file>\fR, then publish it with \fBgumroad pages push <slug> <file>\fR\&.
+
+.PP
+Use the slug "profile" to pull your profile landing page's published custom HTML.
+
+
+.SH OPTIONS
+\fB--force\fP[=false]
+	Overwrite the output file if it already exists
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for pull
+
+.PP
+\fB-o\fP, \fB--output\fP=""
+	Write the HTML to this path (- for stdout; defaults to \&.html)
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad pages pull about
+  gumroad pages pull about -o custom.html
+  gumroad pages pull about -o -
+  gumroad pages pull profile
+  gumroad pages pull about --json --jq '.page.title'
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-pages(1)\fP

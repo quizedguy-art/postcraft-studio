@@ -1,0 +1,109 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-sales-buyers - List deduplicated buyers for a product
+
+
+.SH SYNOPSIS
+\fBgumroad sales buyers [flags]\fP
+
+
+.SH DESCRIPTION
+List the unique buyers who purchased one or more products.
+
+.PP
+Buyers are deduplicated by email and aggregated across every page, so a buyer
+who purchased more than once appears a single time with a purchase count and
+their most recent purchase date. UTM fields in JSON, CSV, and plain output come
+from the buyer's most recent attributed purchase, and stay empty when no
+purchase came through a UTM link. If attributed purchases have the same
+timestamp, the first sale returned by the API wins. Use gumroad sales export for
+the full per-sale web CSV by email.
+
+.PP
+Pass --product more than once to union buyers across a relaunched listing's old
+and new IDs and dedupe them in one shot.
+
+
+.SH OPTIONS
+\fB--after\fP=""
+	Filter sales after date (YYYY-MM-DD)
+
+.PP
+\fB--before\fP=""
+	Filter sales before date (YYYY-MM-DD)
+
+.PP
+\fB--csv\fP[=false]
+	Output as CSV
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for buyers
+
+.PP
+\fB--product\fP=[]
+	Filter by product ID (repeatable)
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad sales buyers --product <id>
+  gumroad sales buyers --product <old-id> --product <new-id>
+  gumroad sales buyers --product <id> --after 2024-01-01 --csv
+  gumroad sales buyers --product <id> --json --jq '.buyers[].email'
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-sales(1)\fP

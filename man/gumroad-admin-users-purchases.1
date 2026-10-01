@@ -1,0 +1,137 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-admin-users-purchases - List purchases for a user
+
+
+.SH SYNOPSIS
+\fBgumroad admin users purchases [flags]\fP
+
+
+.SH DESCRIPTION
+List a user's purchase history across sellers.
+
+.PP
+Status filters are sent as purchase_state values. Use --chargedback,
+--has-early-fraud-warning, and --has-affiliate for the boolean risk filters.
+
+
+.SH OPTIONS
+\fB--chargedback\fP[=false]
+	Filter by whether the purchase has a chargeback
+
+.PP
+\fB--cursor\fP=""
+	Pagination cursor (from a previous response)
+
+.PP
+\fB--email\fP=""
+	User email
+
+.PP
+\fB--end-at\fP=""
+	Only include purchases created at or before this ISO 8601 timestamp
+
+.PP
+\fB--has-affiliate\fP[=false]
+	Filter by whether the purchase has affiliate credit
+
+.PP
+\fB--has-early-fraud-warning\fP[=false]
+	Filter by whether the purchase has an early fraud warning
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for purchases
+
+.PP
+\fB--ip-address\fP=""
+	Filter by purchase IP address
+
+.PP
+\fB--limit\fP=0
+	Maximum results per page (default 20)
+
+.PP
+\fB--start-at\fP=""
+	Only include purchases created at or after this ISO 8601 timestamp
+
+.PP
+\fB--status\fP=[]
+	Purchase state filter (repeatable)
+
+.PP
+\fB--stripe-fingerprint\fP=""
+	Filter by Stripe card fingerprint
+
+.PP
+\fB--user-id\fP=""
+	User external ID
+
+.PP
+\fB--username\fP=""
+	User username
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad admin users purchases --user-id 2245593582708
+  gumroad admin users purchases --username sellerone
+  gumroad admin users purchases --email buyer@example.com --status successful --status failed
+  gumroad admin users purchases --user-id 2245593582708 --start-at 2026-01-01T00:00:00Z
+  gumroad admin users purchases --user-id 2245593582708 --chargedback=false --limit 50
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-admin-users(1)\fP

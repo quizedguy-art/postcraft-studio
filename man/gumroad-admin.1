@@ -1,0 +1,98 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-admin - Run Gumroad admin commands
+
+
+.SH SYNOPSIS
+\fBgumroad admin [flags]\fP
+
+
+.SH DESCRIPTION
+Run internal Gumroad admin API commands with a separate admin token.
+
+
+.SH OPTIONS
+\fB-h\fP, \fB--help\fP[=false]
+	help for admin
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad admin purchases view <purchase-id>
+  gumroad admin purchases lookup --stripe-fingerprint <fingerprint>
+  gumroad admin purchases refund <purchase-id> --email <email>
+  gumroad admin purchases cancel-subscription <purchase-id> --email <email>
+  gumroad admin licenses lookup --key <license-key>
+  gumroad admin users info --email <email>
+  gumroad admin users affiliates --user-id <user-id> --direction granted
+  gumroad admin users comments list --user-id <user-id>
+  gumroad admin users comments add --user-id <user-id> --content "VAT exempt confirmed"
+  gumroad admin users compliance --user-id <user-id>
+  gumroad admin users radar --user-id <user-id>
+  gumroad admin users purchases --user-id <user-id> --status successful
+  gumroad admin users related --email <email> --signal ip
+  gumroad admin users suspension --email <email>
+  gumroad admin users suspend-for-tos-violation --user-id <user-id> --expected-email <email>
+  gumroad admin users watch --user-id <user-id> --expected-email <email> --revenue-threshold 200
+  gumroad admin payouts list --email <email>
+  gumroad admin payouts pause --user-id <user-id> --expected-email <email>
+  gumroad admin payouts scheduled create --user-id <user-id> --processor stripe
+  gumroad admin products list --email <email>
+  gumroad admin products view <product-id>
+  gumroad admin products flag-for-tos-violation <product-id> --user-id <user-id>
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad(1)\fP, \fBgumroad-admin-licenses(1)\fP, \fBgumroad-admin-payouts(1)\fP, \fBgumroad-admin-products(1)\fP, \fBgumroad-admin-purchases(1)\fP, \fBgumroad-admin-users(1)\fP

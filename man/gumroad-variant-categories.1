@@ -1,0 +1,78 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-variant-categories - Manage variant categories
+
+
+.SH SYNOPSIS
+\fBgumroad variant-categories [flags]\fP
+
+
+.SH DESCRIPTION
+Manage variant categories
+
+
+.SH OPTIONS
+\fB-h\fP, \fB--help\fP[=false]
+	help for variant-categories
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad variant-categories list --product <id>
+  gumroad variant-categories create --product <id> --title "Size"
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad(1)\fP, \fBgumroad-variant-categories-create(1)\fP, \fBgumroad-variant-categories-delete(1)\fP, \fBgumroad-variant-categories-list(1)\fP, \fBgumroad-variant-categories-update(1)\fP, \fBgumroad-variant-categories-view(1)\fP

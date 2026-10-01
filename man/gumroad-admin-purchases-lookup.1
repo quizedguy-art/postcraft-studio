@@ -1,0 +1,100 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-admin-purchases-lookup - Look up purchases sharing a fingerprint, browser, or IP
+
+
+.SH SYNOPSIS
+\fBgumroad admin purchases lookup [flags]\fP
+
+
+.SH DESCRIPTION
+Look up purchases sharing a fingerprint, browser, or IP
+
+
+.SH OPTIONS
+\fB--browser-guid\fP=""
+	Browser GUID to match
+
+.PP
+\fB--cursor\fP=""
+	Pagination cursor (from a previous response)
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for lookup
+
+.PP
+\fB--ip-address\fP=""
+	IP address to match
+
+.PP
+\fB--limit\fP=0
+	Maximum results per page (default 20)
+
+.PP
+\fB--stripe-fingerprint\fP=""
+	Stripe card fingerprint to match
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad admin purchases lookup --stripe-fingerprint fp_abc
+  gumroad admin purchases lookup --browser-guid bguid_abc
+  gumroad admin purchases lookup --ip-address 1.2.3.4 --limit 25
+  gumroad admin purchases lookup --ip-address 1.2.3.4 --cursor cur-next
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-admin-purchases(1)\fP

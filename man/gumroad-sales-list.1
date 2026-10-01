@@ -1,0 +1,113 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-sales-list - List sales
+
+
+.SH SYNOPSIS
+\fBgumroad sales list [flags]\fP
+
+
+.SH DESCRIPTION
+List sales
+
+
+.SH OPTIONS
+\fB--after\fP=""
+	Filter sales after date (YYYY-MM-DD)
+
+.PP
+\fB--all\fP[=false]
+	Fetch all pages
+
+.PP
+\fB--before\fP=""
+	Filter sales before date (YYYY-MM-DD)
+
+.PP
+\fB--csv\fP[=false]
+	Output as CSV
+
+.PP
+\fB--email\fP=""
+	Filter by buyer email
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for list
+
+.PP
+\fB--order\fP=""
+	Filter by order ID
+
+.PP
+\fB--page-key\fP=""
+	Pagination cursor
+
+.PP
+\fB--product\fP=""
+	Filter by product ID
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad sales list
+  gumroad sales list --product <id> --after 2024-01-01
+  gumroad sales list --after 2024-01-01 --csv
+  gumroad sales list --all
+  gumroad sales list --json --jq '.sales[0].id'
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-sales(1)\fP

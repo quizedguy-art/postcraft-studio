@@ -1,0 +1,96 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-workflows-add-email - Add an email step to a workflow
+
+
+.SH SYNOPSIS
+\fBgumroad workflows add-email  [flags]\fP
+
+
+.SH DESCRIPTION
+Add one email step from an HTML body file.
+
+.PP
+This command does not change the workflow publication state. A published
+workflow can schedule eligible past recipients when you add the step. Pass
+--yes to confirm the write.
+
+
+.SH OPTIONS
+\fB--body\fP=""
+	Path to an HTML body file, or - for stdin (required)
+
+.PP
+\fB--delay\fP=""
+	Delay such as "4 weeks" (required)
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for add-email
+
+.PP
+\fB--subject\fP=""
+	Email subject (required)
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad workflows add-email <workflow-id> --subject "Week four" --body ./email.html --delay "4 weeks" --yes
+  build-email | gumroad workflows add-email <workflow-id> --subject "Welcome" --body - --delay "0 hours" --yes
+  gumroad workflows add-email <workflow-id> --subject "Check params" --body ./email.html --delay "1 day" --dry-run
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-workflows(1)\fP

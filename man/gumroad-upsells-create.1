@@ -1,0 +1,140 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-upsells-create - Create an upsell or cross-sell
+
+
+.SH SYNOPSIS
+\fBgumroad upsells create [flags]\fP
+
+
+.SH DESCRIPTION
+Create an upsell or cross-sell.
+
+.PP
+--product is the product being offered. For a version upgrade (an upsell), pass
+one or more --offer-variant : pairs.
+
+.PP
+For a cross-sell, pass --cross-sell and either --universal (offer it to buyers of
+every product) or one or more --selected-product  (offer it to buyers of those
+products). Add an optional discount with --amount or --percent-off.
+
+
+.SH OPTIONS
+\fB--amount\fP=""
+	Flat discount on the offered product (e.g. 5, 5.00)
+
+.PP
+\fB--cross-sell\fP[=false]
+	Create a cross-sell instead of a version upsell
+
+.PP
+\fB--description\fP=""
+	Description shown to the buyer
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for create
+
+.PP
+\fB--name\fP=""
+	Upsell name (required)
+
+.PP
+\fB--offer-variant\fP=[]
+	Version upgrade as : (repeatable)
+
+.PP
+\fB--paused\fP[=false]
+	Create the upsell paused
+
+.PP
+\fB--percent-off\fP=0
+	Percentage discount on the offered product
+
+.PP
+\fB--product\fP=""
+	Offered product ID (required)
+
+.PP
+\fB--replace-selected-products\fP[=false]
+	Replace the selected products in the cart with the offered product
+
+.PP
+\fB--selected-product\fP=[]
+	Product ID whose buyers see the cross-sell (repeatable)
+
+.PP
+\fB--text\fP=""
+	Headline shown to the buyer
+
+.PP
+\fB--universal\fP[=false]
+	Offer the cross-sell to buyers of every product
+
+.PP
+\fB--variant\fP=""
+	Offered version ID of the offered product (cross-sell)
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad upsells create --name "Pro upgrade" --product <id> --offer-variant <selected_id>:<offered_id>
+  gumroad upsells create --name "Audiobook" --product <id> --cross-sell --selected-product <id> --percent-off 50
+  gumroad upsells create --name "Add-on" --product <id> --cross-sell --universal --amount 5
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-upsells(1)\fP

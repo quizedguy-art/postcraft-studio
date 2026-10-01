@@ -1,0 +1,87 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-files-abort - Abort an orphaned multipart upload on S3
+
+
+.SH SYNOPSIS
+\fBgumroad files abort [flags]\fP
+
+
+.SH DESCRIPTION
+Abort an orphaned multipart upload using the upload_id and key returned in a failed upload's recovery fields. Use this when a previous \fBgumroad files upload\fR left a multipart upload behind (cleanup_failed error, or a state-unknown finalize that you decided not to retry).
+
+
+.SH OPTIONS
+\fB-h\fP, \fB--help\fP[=false]
+	help for abort
+
+.PP
+\fB--key\fP=""
+	S3 object key for the upload (required)
+
+.PP
+\fB--upload-id\fP=""
+	S3 multipart upload_id to abort (required)
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad files abort --upload-id up-123 --key attachments/u/k/original/pack.zip
+  gumroad files abort --upload-id "$(jq -r .error.recovery.upload_id < err.json)" \\
+    --key "$(jq -r .error.recovery.key < err.json)"
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-files(1)\fP

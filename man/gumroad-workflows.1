@@ -1,0 +1,85 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-workflows - Manage email workflows
+
+
+.SH SYNOPSIS
+\fBgumroad workflows [flags]\fP
+
+
+.SH DESCRIPTION
+Manage Gumroad email workflows.
+
+.PP
+List workflows and view their email steps. Add a step or update selected step fields without changing the workflow publication state. A new step on a published workflow can schedule recipients. A delay change can reschedule recipients.
+
+
+.SH OPTIONS
+\fB-h\fP, \fB--help\fP[=false]
+	help for workflows
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad workflows list
+  gumroad workflows list --json
+  gumroad workflows view <id>
+  gumroad workflows view <id> --json --jq '.workflow.emails[] | {subject, click_rate}'
+  gumroad workflows add-email <workflow-id> --subject "Week four" --body ./email.html --delay "4 weeks" --yes
+  gumroad workflows update-email <workflow-id> <email-id> --body ./email.html
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad(1)\fP, \fBgumroad-workflows-add-email(1)\fP, \fBgumroad-workflows-list(1)\fP, \fBgumroad-workflows-update-email(1)\fP, \fBgumroad-workflows-view(1)\fP

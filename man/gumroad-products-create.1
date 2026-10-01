@@ -1,0 +1,179 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-products-create - Create a new product (as draft)
+
+
+.SH SYNOPSIS
+\fBgumroad products create [flags]\fP
+
+
+.SH DESCRIPTION
+Create a new product (as draft)
+
+
+.SH OPTIONS
+\fB--category\fP=""
+	Product category path (for example: design/ui-and-web/figma)
+
+.PP
+\fB--cover-image\fP=""
+	Local JPEG, PNG, or GIF cover image to upload after creating the product
+
+.PP
+\fB--currency\fP=""
+	Price currency (e.g. usd, eur)
+
+.PP
+\fB--custom-permalink\fP=""
+	Custom URL slug
+
+.PP
+\fB--custom-receipt\fP=""
+	Custom receipt text
+
+.PP
+\fB--custom-summary\fP=""
+	Short summary
+
+.PP
+\fB--description\fP=""
+	HTML description
+
+.PP
+\fB--file\fP=[]
+	Attach a local file to the new product (repeatable)
+
+.PP
+\fB--file-description\fP=[]
+	Description for the matching --file upload (repeatable; use an empty string to skip a slot)
+
+.PP
+\fB--file-name\fP=[]
+	Display filename for the matching --file upload (repeatable; use an empty string to skip a slot)
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for create
+
+.PP
+\fB--max-purchase-count\fP=0
+	Maximum number of purchases (inventory limit)
+
+.PP
+\fB--name\fP=""
+	Product name (required)
+
+.PP
+\fB--pay-what-you-want\fP[=false]
+	Enable pay-what-you-want pricing
+
+.PP
+\fB--preview-image\fP=[]
+	Additional local JPEG, PNG, or GIF preview image to upload as a product cover (repeatable)
+
+.PP
+\fB--preview-video\fP=[]
+	Local MP4, MOV, M4V, MPEG, WMV, or WebM preview video to upload as a product cover (repeatable)
+
+.PP
+\fB--price\fP=""
+	Price (e.g. 10, 10.00, 9.99)
+
+.PP
+\fB--refund-fine-print\fP=""
+	Fine print for the product-level refund policy (empty string clears it)
+
+.PP
+\fB--refund-period\fP=""
+	Product-level refund period: inherit, none, 7, 14, 30, or 183 (inherit returns to the account default)
+
+.PP
+\fB--subscription-duration\fP=""
+	Subscription duration (membership only: monthly, quarterly, biannually, yearly, every_two_years)
+
+.PP
+\fB--suggested-price\fP=""
+	Suggested price for pay-what-you-want (e.g. 5, 5.00)
+
+.PP
+\fB--tag\fP=[]
+	Tag (repeatable)
+
+.PP
+\fB--taxonomy-id\fP=""
+	Numeric taxonomy/category ID
+
+.PP
+\fB--thumbnail\fP=""
+	Local JPEG, PNG, or GIF thumbnail image to upload after creating the product
+
+.PP
+\fB--type\fP="digital"
+	Product type (digital, course, ebook, membership, bundle, coffee, call, commission)
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad products create --name "Art Pack" --price 10.00
+  gumroad products create --name "Art Pack" --file ./pack.zip --file-name "Art Pack.zip"
+  gumroad products create --name "Art Pack" --cover-image ./cover.jpg --thumbnail ./thumb.jpg
+  gumroad products create --name "Figma Kit" --category design/ui-and-web/figma
+  gumroad products create --name "Newsletter" --type membership --subscription-duration monthly
+  gumroad products create --name "E-Book" --type ebook --price 5 --tag art --tag digital
+  gumroad products create --name "Art Pack" --price 10 --refund-period none --refund-fine-print "No refunds once downloaded."
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-products(1)\fP

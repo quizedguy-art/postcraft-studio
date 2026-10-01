@@ -1,0 +1,95 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-admin-users-refund-balance - Refund unpaid purchases for a suspended user
+
+
+.SH SYNOPSIS
+\fBgumroad admin users refund-balance [flags]\fP
+
+
+.SH DESCRIPTION
+Preview and queue refunds for all refundable purchases still in Gumroad-held unpaid balance.
+
+.PP
+The command first reads /users/unpaid_balance, then sends the returned count and
+total cents back to /users/refund_balance as stale-state guards. --expected-email
+is required because this is an irreversible money-moving workflow.
+
+.PP
+Pass --dry-run to run the preview GET and print the guarded POST that would be
+sent without queueing refunds.
+
+
+.SH OPTIONS
+\fB--expected-email\fP=""
+	Optional current email guard
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for refund-balance
+
+.PP
+\fB--user-id\fP=""
+	User external ID (required)
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad admin users refund-balance --user-id 2245593582708 --expected-email seller@example.com --dry-run
+  gumroad admin users refund-balance --user-id 2245593582708 --expected-email seller@example.com --yes
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-admin-users(1)\fP

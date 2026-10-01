@@ -1,0 +1,84 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-files - Upload and manage file attachments
+
+
+.SH SYNOPSIS
+\fBgumroad files [flags]\fP
+
+
+.SH DESCRIPTION
+Upload and manage files in your Gumroad seller namespace.
+
+.PP
+Uploaded files live under your seller's attachments namespace and can be attached to products (see \fBgumroad products create --help\fR). After a failed \fBupload\fR returns complete_state_unknown recovery fields, use \fBgumroad files complete --recovery ...\fR to finalize without re-uploading, or \fBgumroad files abort\fR to reclaim the orphaned multipart upload.
+
+
+.SH OPTIONS
+\fB-h\fP, \fB--help\fP[=false]
+	help for files
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad files upload ./pack.zip
+  gumroad files upload ./pack.zip --name "Art Pack.zip"
+  gumroad files upload ./pack.zip --json --jq '.file_url'
+  gumroad files complete --recovery recovery.json
+  gumroad files abort --upload-id up-123 --key attachments/u/k/original/pack.zip
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad(1)\fP, \fBgumroad-files-abort(1)\fP, \fBgumroad-files-complete(1)\fP, \fBgumroad-files-upload(1)\fP

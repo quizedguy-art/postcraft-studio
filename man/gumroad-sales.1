@@ -1,0 +1,82 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-sales - Manage sales
+
+
+.SH SYNOPSIS
+\fBgumroad sales [flags]\fP
+
+
+.SH DESCRIPTION
+Manage sales
+
+
+.SH OPTIONS
+\fB-h\fP, \fB--help\fP[=false]
+	help for sales
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad sales list
+  gumroad sales buyers --product <id>
+  gumroad sales summary
+  gumroad sales export --from 2026-01-01 --to 2026-05-21
+  gumroad sales view <id>
+  gumroad sales refund <id>
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad(1)\fP, \fBgumroad-sales-buyers(1)\fP, \fBgumroad-sales-export(1)\fP, \fBgumroad-sales-list(1)\fP, \fBgumroad-sales-refund(1)\fP, \fBgumroad-sales-resend-receipt(1)\fP, \fBgumroad-sales-ship(1)\fP, \fBgumroad-sales-summary(1)\fP, \fBgumroad-sales-view(1)\fP

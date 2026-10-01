@@ -1,0 +1,79 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-emails-send-preview - Send a preview email to yourself
+
+
+.SH SYNOPSIS
+\fBgumroad emails send-preview  [flags]\fP
+
+
+.SH DESCRIPTION
+Send a preview of an audience email to your own inbox and print the preview URL, so you can review it before sending to the whole audience.
+
+
+.SH OPTIONS
+\fB-h\fP, \fB--help\fP[=false]
+	help for send-preview
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad emails send-preview <id>
+  gumroad emails send-preview <id> --plain
+  gumroad emails send-preview <id> --json
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-emails(1)\fP

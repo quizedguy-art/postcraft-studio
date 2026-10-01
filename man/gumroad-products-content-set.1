@@ -1,0 +1,97 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad-products-content-set - Replace product rich content JSON
+
+
+.SH SYNOPSIS
+\fBgumroad products content set  [path|-] [flags]\fP
+
+
+.SH DESCRIPTION
+Replace a product's rich content page array from a JSON file or stdin.
+
+.PP
+This is a whole-document write. Existing pages omitted from the JSON are deleted, so run \fB--dry-run\fR before writing and pass \fB--yes\fR when you intend to delete omitted pages. Without a path, whole-document writes read ./content.json. Pass \fB--page\fR to read one page object from ./page.json by default and merge it into the existing document before writing.
+
+
+.SH OPTIONS
+\fB--category\fP=""
+	Variant category ID for per-variant content
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for set
+
+.PP
+\fB--page\fP=""
+	Rich content page ID to replace
+
+.PP
+\fB--variant\fP=""
+	Variant ID for per-variant content
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  gumroad products content set <product_id> content.json --dry-run
+  gumroad products content set <product_id> --page <page_id> --dry-run
+  gumroad products content set <product_id> page.json --page <page_id> --dry-run
+  gumroad products content set <product_id> content.json --variant <variant_id> --category <cat_id> --dry-run
+  gumroad products content set <product_id> content.json --yes
+  gumroad products content set <product_id> - < content.json
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-products-content(1)\fP

@@ -1,0 +1,96 @@
+.nh
+.TH "GUMROAD" "1" "Sep 2026" "Gumroad" "Gumroad CLI"
+
+.SH NAME
+gumroad - CLI for the Gumroad API
+
+
+.SH SYNOPSIS
+\fBgumroad [flags]\fP
+
+
+.SH DESCRIPTION
+A command-line interface for the Gumroad API.
+Designed for humans and AI agents alike.
+
+.PP
+Documentation: https://github.com/antiwork/gumroad
+Man pages:     available locally as \fBman gumroad\fR after \fBmake install\fR
+Report issues: https://github.com/antiwork/gumroad-cli/issues
+
+
+.SH OPTIONS
+\fB--debug\fP[=false]
+	Enable debug logging to stderr
+
+.PP
+\fB--dry-run\fP[=false]
+	Preview mutating requests without executing them
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for gumroad
+
+.PP
+\fB--jq\fP=""
+	Filter JSON output with a jq expression
+
+.PP
+\fB--json\fP[=false]
+	Output as JSON
+
+.PP
+\fB--no-color\fP[=false]
+	Disable color output
+
+.PP
+\fB--no-image\fP[=false]
+	Disable image rendering
+
+.PP
+\fB--no-input\fP[=false]
+	Disable interactive prompts
+
+.PP
+\fB--non-interactive\fP[=false]
+	Run in explicit CI/agent mode
+
+.PP
+\fB--page-delay\fP=0s
+	Wait between paginated --all requests (e.g. 200ms, 1s)
+
+.PP
+\fB--plain\fP[=false]
+	Output as plain tab-separated text
+
+.PP
+\fB-q\fP, \fB--quiet\fP[=false]
+	Suppress non-essential output
+
+.PP
+\fB--yes\fP[=false]
+	Skip confirmation prompts
+
+
+.SH EXAMPLE
+.EX
+  # Log in with your API token
+  gumroad auth login
+
+  # View your account
+  gumroad user --json --jq '.user.email'
+
+  # List products and sales
+  gumroad products list
+  gumroad sales list --json --jq '.sales[0].id'
+
+  # Connect an MCP client over stdio
+  gumroad mcp
+
+  # Verify a license without incrementing uses
+  echo "$LICENSE_KEY" | gumroad licenses verify --product <id> --no-increment
+.EE
+
+
+.SH SEE ALSO
+\fBgumroad-admin(1)\fP, \fBgumroad-auth(1)\fP, \fBgumroad-completion(1)\fP, \fBgumroad-custom-fields(1)\fP, \fBgumroad-emails(1)\fP, \fBgumroad-files(1)\fP, \fBgumroad-licenses(1)\fP, \fBgumroad-marketing(1)\fP, \fBgumroad-mcp(1)\fP, \fBgumroad-media(1)\fP, \fBgumroad-offer-codes(1)\fP, \fBgumroad-pages(1)\fP, \fBgumroad-payouts(1)\fP, \fBgumroad-products(1)\fP, \fBgumroad-refund-policy(1)\fP, \fBgumroad-sales(1)\fP, \fBgumroad-skill(1)\fP, \fBgumroad-subscribers(1)\fP, \fBgumroad-upsells(1)\fP, \fBgumroad-user(1)\fP, \fBgumroad-variant-categories(1)\fP, \fBgumroad-variants(1)\fP, \fBgumroad-webhooks(1)\fP, \fBgumroad-workflows(1)\fP
