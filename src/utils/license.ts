@@ -24,7 +24,37 @@ export async function verifyLicenseKey(licenseKey: string): Promise<LicenseValid
   }
 
   try {
-    // 1. Validate against Lemon Squeezy Official License API
+    // 1. Validate against Gumroad Official License Verification API
+    const gumroadBody = new URLSearchParams();
+    gumroadBody.append('product_permalink', 'slideforge-pro');
+    gumroadBody.append('license_key', cleanKey);
+    gumroadBody.append('increment_uses_count', 'false');
+
+    const gumroadRes = await fetch('https://api.gumroad.com/v2/licenses/verify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: gumroadBody.toString(),
+    });
+
+    if (gumroadRes.ok) {
+      const gData = await gumroadRes.json();
+      if (gData.success) {
+        return {
+          valid: true,
+          tier: 'lifetime',
+          customerEmail: gData.purchase?.email,
+          message: 'Gumroad Pro License verified successfully!',
+        };
+      }
+    }
+  } catch (err) {
+    console.warn('Gumroad API verification check skipped:', err);
+  }
+
+  try {
+    // 2. Validate against Lemon Squeezy Official License API
     const formData = new FormData();
     formData.append('license_key', cleanKey);
     formData.append('instance_name', 'SlideForge Web');
