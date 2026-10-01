@@ -2,17 +2,22 @@ import React, { useState } from 'react';
 import { 
   signInWithGoogle, 
   signInWithEmail, 
+  signInWithPassword,
+  signUpWithPassword,
   isSupabaseConfigured 
 } from '../utils/supabase';
 import { 
   X, 
   Sparkles, 
   Mail, 
+  Lock,
   ArrowRight, 
   CheckCircle2, 
   AlertCircle,
   Loader2,
-  Shield
+  Shield,
+  KeyRound,
+  Send
 } from 'lucide-react';
 
 interface AuthModalProps {
@@ -26,9 +31,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   onClose,
 }) => {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [authMode, setAuthMode] = useState<'magic-link' | 'password-signin' | 'password-signup'>('magic-link');
   const [isLoading, setIsLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
@@ -38,7 +46,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     try {
       const { error } = await signInWithGoogle();
       if (error) {
-        setErrorMessage(error.message || 'Google sign-in failed. Please verify Supabase setup.');
+        if (error.message?.toLowerCase().includes('provider is not enabled')) {
+          setErrorMessage('Google Sign-In needs Client ID in Supabase. Use Email Login below, or configure Google in Supabase.');
+        } else {
+          setErrorMessage(error.message || 'Google sign-in failed. Please try Email login.');
+        }
       }
     } catch {
       setErrorMessage('Sign in request failed. Please check your connection.');
@@ -47,7 +59,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     }
   };
 
-  const handleEmailLogin = async (e: React.FormEvent) => {
+  const handleAuthSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !email.includes('@')) {
       setErrorMessage('Please enter a valid email address.');
@@ -56,16 +68,43 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
     setIsLoading(true);
     setErrorMessage(null);
+    setSuccessMessage(null);
 
     try {
-      const { error } = await signInWithEmail(email.trim());
-      if (error) {
-        setErrorMessage(error.message || 'Could not send login link.');
-      } else {
-        setEmailSent(true);
+      if (authMode === 'magic-link') {
+        const { error } = await signInWithEmail(email.trim());
+        if (error) {
+          setErrorMessage(error.message || 'Could not send login link.');
+        } else {
+          setEmailSent(true);
+        }
+      } else if (authMode === 'password-signin') {
+        if (!password) {
+          setErrorMessage('Please enter your password.');
+          setIsLoading(false);
+          return;
+        }
+        const { error } = await signInWithPassword(email.trim(), password);
+        if (error) {
+          setErrorMessage(error.message || 'Invalid email or password.');
+        } else {
+          onClose();
+        }
+      } else if (authMode === 'password-signup') {
+        if (!password || password.length < 6) {
+          setErrorMessage('Password must be at least 6 characters.');
+          setIsLoading(false);
+          return;
+        }
+        const { error } = await signUpWithPassword(email.trim(), password);
+        if (error) {
+          setErrorMessage(error.message || 'Signup failed.');
+        } else {
+          setSuccessMessage('Account created! Please check your email if confirmation was sent, or sign in.');
+        }
       }
     } catch {
-      setErrorMessage('Unable to send magic link. Please check your internet connection.');
+      setErrorMessage('Request failed. Please check your internet connection.');
     } finally {
       setIsLoading(false);
     }
@@ -87,7 +126,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -100,7 +139,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <div className="space-y-1">
               <span className="font-bold">Cloud Sync Ready:</span>
               <p className="text-[11px] text-slate-400">
-                To connect your live Google Auth, add <code className="text-amber-200">VITE_SUPABASE_URL</code> and <code className="text-amber-200">VITE_SUPABASE_ANON_KEY</code> to your Vercel Environment Variables.
+                To connect your live database, add <code className="text-amber-200">VITE_SUPABASE_URL</code> and <code className="text-amber-200">VITE_SUPABASE_ANON_KEY</code>.
               </p>
             </div>
           </div>
@@ -113,13 +152,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             </div>
             <h3 className="font-bold text-white text-sm">Check your inbox</h3>
             <p className="text-xs text-slate-400">
-              We sent a 1-click login link to <strong className="text-slate-200">{email}</strong>. Click the link in your email to sign in instantly.
+              We sent a 1-click magic link to <strong className="text-slate-200">{email}</strong>. Click the link in your email to sign in instantly.
             </p>
             <button
               onClick={() => setEmailSent(false)}
-              className="text-xs text-indigo-400 hover:underline pt-1"
+              className="text-xs text-indigo-400 hover:underline pt-1 cursor-pointer"
             >
-              Use a different email
+              Use a different email / password
             </button>
           </div>
         ) : (
@@ -159,8 +198,42 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               <div className="flex-1 h-[1px] bg-slate-800" />
             </div>
 
-            {/* EMAIL FORM */}
-            <form onSubmit={handleEmailLogin} className="space-y-3">
+            {/* AUTH METHOD SELECTOR */}
+            <div className="flex items-center p-1 bg-slate-950 rounded-xl border border-slate-800 text-[11px]">
+              <button
+                type="button"
+                onClick={() => setAuthMode('magic-link')}
+                className={`flex-1 py-1.5 rounded-lg font-medium transition-colors flex items-center justify-center gap-1.5 cursor-pointer ${
+                  authMode === 'magic-link' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <Send className="w-3 h-3" />
+                <span>Magic Link</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setAuthMode('password-signin')}
+                className={`flex-1 py-1.5 rounded-lg font-medium transition-colors flex items-center justify-center gap-1.5 cursor-pointer ${
+                  authMode === 'password-signin' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <KeyRound className="w-3 h-3" />
+                <span>Sign In</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setAuthMode('password-signup')}
+                className={`flex-1 py-1.5 rounded-lg font-medium transition-colors flex items-center justify-center gap-1.5 cursor-pointer ${
+                  authMode === 'password-signup' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <Sparkles className="w-3 h-3" />
+                <span>Sign Up</span>
+              </button>
+            </div>
+
+            {/* FORM */}
+            <form onSubmit={handleAuthSubmit} className="space-y-3">
               <div>
                 <label className="block text-xs font-semibold text-slate-400 mb-1.5">
                   Email Address
@@ -172,10 +245,30 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder="you@company.com"
+                    required
                     className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500 transition-colors"
                   />
                 </div>
               </div>
+
+              {authMode !== 'magic-link' && (
+                <div className="animate-fadeIn">
+                  <label className="block text-xs font-semibold text-slate-400 mb-1.5">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <Lock className="w-4 h-4 text-slate-500 absolute left-3 top-2.5" />
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={e => setPassword(e.target.value)}
+                      placeholder="••••••••"
+                      required
+                      className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500 transition-colors"
+                    />
+                  </div>
+                </div>
+              )}
 
               <button
                 type="submit"
@@ -186,7 +279,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   <Loader2 className="w-4 h-4 animate-spin" />
                 ) : (
                   <>
-                    <span>Send Login Link</span>
+                    <span>
+                      {authMode === 'magic-link' && 'Send 1-Click Login Link'}
+                      {authMode === 'password-signin' && 'Sign In to Account'}
+                      {authMode === 'password-signup' && 'Create Free Account'}
+                    </span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </>
                 )}
@@ -198,6 +295,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         {errorMessage && (
           <p className="text-xs text-rose-400 font-medium text-center animate-fadeIn">
             {errorMessage}
+          </p>
+        )}
+
+        {successMessage && (
+          <p className="text-xs text-emerald-400 font-medium text-center animate-fadeIn">
+            {successMessage}
           </p>
         )}
 

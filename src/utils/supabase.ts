@@ -48,6 +48,41 @@ export async function signInWithEmail(email: string) {
 }
 
 /**
+ * Sign in with Email & Password
+ */
+export async function signInWithPassword(email: string, password: string) {
+  if (!supabase) {
+    return { error: { message: 'Supabase is not configured.' } };
+  }
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  return { data, error };
+}
+
+/**
+ * Sign up with Email & Password
+ */
+export async function signUpWithPassword(email: string, password: string) {
+  if (!supabase) {
+    return { error: { message: 'Supabase is not configured.' } };
+  }
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: window.location.origin,
+    },
+  });
+
+  return { data, error };
+}
+
+/**
  * Sign Out
  */
 export async function signOut() {
