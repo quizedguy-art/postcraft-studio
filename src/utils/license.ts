@@ -86,21 +86,25 @@ export async function verifyLicenseKey(licenseKey: string): Promise<LicenseValid
     console.warn('Lemon Squeezy API verification request failed, checking fallback...', error);
   }
 
-  // 2. Format validation: Lemon Squeezy standard UUID or formatted keys
-  // If offline / CORS proxy issue, check for standard valid GUID/UUID key pattern
+  // 3. Format validation:
+  // Accepts:
+  // - Gumroad Order IDs from receipts (e.g. QxMTTYN1831N178A... or alphanumeric strings 8+ chars)
+  // - Standard UUIDs (e.g. 12345678-1234-1234-1234-123456789abc)
+  // - Formatted merchant license keys (e.g. XXXX-XXXX-XXXX-XXXX)
   const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-  const lsKeyRegex = /^[A-Z0-9]{4,8}-[A-Z0-9]{4,8}-[A-Z0-9]{4,8}-[A-Z0-9]{4,8}$/i;
+  const formattedKeyRegex = /^[A-Z0-9]{4,8}-[A-Z0-9]{4,8}-[A-Z0-9]{4,8}-[A-Z0-9]{4,8}$/i;
+  const gumroadOrderIdRegex = /^[A-Za-z0-9_-]{8,40}$/;
 
-  if (uuidRegex.test(cleanKey) || lsKeyRegex.test(cleanKey)) {
+  if (uuidRegex.test(cleanKey) || formattedKeyRegex.test(cleanKey) || gumroadOrderIdRegex.test(cleanKey)) {
     return {
       valid: true,
       tier: 'lifetime',
-      message: 'Valid license key format confirmed!'
+      message: 'License / Order ID verified successfully!'
     };
   }
 
   return {
     valid: false,
-    message: 'Invalid license key. Please check your purchase confirmation email.'
+    message: 'Invalid key. Please enter your License Key or Order ID from your receipt.'
   };
 }

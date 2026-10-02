@@ -213,16 +213,16 @@ export const PricingModal: React.FC<PricingModalProps> = ({
         <div className="p-4 bg-slate-950/80 border border-slate-800 rounded-xl space-y-2">
           <div className="flex items-center justify-between text-xs">
             <span className="font-semibold text-slate-300 flex items-center gap-1.5">
-              <Key className="w-3.5 h-3.5 text-indigo-400" /> Have your Lemon Squeezy License Key?
+              <Key className="w-3.5 h-3.5 text-indigo-400" /> Have your License Key or Gumroad Order ID?
             </span>
-            <span className="text-[11px] text-slate-500">Check your purchase receipt email</span>
+            <span className="text-[11px] text-slate-500">From your purchase email</span>
           </div>
           <div className="flex gap-2">
             <input
               type="text"
               value={licenseKeyInput}
               onChange={e => setLicenseKeyInput(e.target.value)}
-              placeholder="Paste License Key (e.g. 12345678-ABCD-EFGH...)"
+              placeholder="Paste License Key or Order ID (e.g. QxMTTY...)"
               disabled={isVerifying}
               className="flex-1 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs font-mono text-white focus:outline-none focus:border-indigo-500 disabled:opacity-50"
             />
