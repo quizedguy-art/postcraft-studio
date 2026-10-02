@@ -208,3 +208,36 @@ export async function saveUserSubscriptionToCloud(userId: string, subscription: 
   }
   return data;
 }
+
+/**
+ * Check if a license key or order ID is already redeemed by another user account
+ */
+export async function checkLicenseKeyRedeemed(licenseKey: string, currentUserId?: string): Promise<{ isRedeemed: boolean; message?: string }> {
+  if (!supabase) return { isRedeemed: false };
+
+  const cleanKey = licenseKey.trim();
+  if (!cleanKey) return { isRedeemed: false };
+
+  try {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('id, is_pro')
+      .eq('license_key', cleanKey);
+
+    if (error || !data) return { isRedeemed: false };
+
+    // Check if another account already activated this key
+    const claimedByAnother = data.find((row: any) => row.id !== currentUserId && row.is_pro);
+    if (claimedByAnother) {
+      return {
+        isRedeemed: true,
+        message: 'This license key / order ID has already been redeemed by another account. Each purchase is strictly valid for 1 account.',
+      };
+    }
+  } catch (err) {
+    console.error('Error checking license redemption:', err);
+  }
+
+  return { isRedeemed: false };
+}
+

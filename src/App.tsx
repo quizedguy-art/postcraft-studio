@@ -932,6 +932,8 @@ export function App() {
         isOpen={isPricingModalOpen}
         onClose={() => setIsPricingModalOpen(false)}
         subscription={subscription}
+        user={user}
+        onOpenAuth={() => setIsAuthModalOpen(true)}
         onUpgrade={handleUpgrade}
         onResetToFree={() => {
           setSubscription({

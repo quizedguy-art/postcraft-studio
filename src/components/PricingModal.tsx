@@ -15,11 +15,14 @@ import {
   RotateCcw,
   Loader2
 } from 'lucide-react';
+import { checkLicenseKeyRedeemed } from '../utils/supabase';
 
 interface PricingModalProps {
   isOpen: boolean;
   onClose: () => void;
   subscription: UserSubscription;
+  user?: any | null;
+  onOpenAuth?: () => void;
   onUpgrade: (tier: 'pro' | 'lifetime', key?: string) => void;
   onResetToFree?: () => void;
 }
@@ -28,6 +31,8 @@ export const PricingModal: React.FC<PricingModalProps> = ({
   isOpen,
   onClose,
   subscription,
+  user,
+  onOpenAuth,
   onUpgrade,
   onResetToFree,
 }) => {
@@ -38,8 +43,17 @@ export const PricingModal: React.FC<PricingModalProps> = ({
   if (!isOpen) return null;
 
   const handleActivateLicense = async () => {
-    if (!licenseKeyInput.trim()) {
-      setVerifyStatus({ type: 'error', message: 'Please enter your license key.' });
+    const cleanKey = licenseKeyInput.trim();
+    if (!cleanKey) {
+      setVerifyStatus({ type: 'error', message: 'Please enter your license key or Order ID.' });
+      return;
+    }
+
+    if (!user) {
+      setVerifyStatus({ 
+        type: 'error', 
+        message: 'Please sign in with Google or Email first so this license can be permanently locked to your account.' 
+      });
       return;
     }
 
@@ -47,9 +61,21 @@ export const PricingModal: React.FC<PricingModalProps> = ({
     setVerifyStatus(null);
 
     try {
-      const result = await verifyLicenseKey(licenseKeyInput.trim());
+      // 1. Check if key is already claimed by another user
+      const redemptionCheck = await checkLicenseKeyRedeemed(cleanKey, user.id);
+      if (redemptionCheck.isRedeemed) {
+        setVerifyStatus({ 
+          type: 'error', 
+          message: `❌ ${redemptionCheck.message || 'This license is already registered to another account.'}` 
+        });
+        setIsVerifying(false);
+        return;
+      }
+
+      // 2. Validate format and provider
+      const result = await verifyLicenseKey(cleanKey);
       if (result.valid) {
-        onUpgrade(result.tier || 'lifetime', licenseKeyInput.trim());
+        onUpgrade(result.tier || 'lifetime', cleanKey);
         triggerConfetti();
         setVerifyStatus({ type: 'success', message: `✅ ${result.message}` });
         setTimeout(() => {
