@@ -23,9 +23,9 @@ export const PAYMENT_CONFIG: PaymentConfig = {
   currency: '$',
   
   monthlyPro: {
-    price: 5.99,
-    priceLabel: '$5.99/month (₹499)',
-    checkoutUrl: 'https://quizzical16.gumroad.com/l/slideforge-pro?wanted=true',
+    price: 4.99,
+    priceLabel: '$4.99/month (₹399)',
+    checkoutUrl: 'https://quizzical16.gumroad.com/l/slideforge-monthly?wanted=true',
   },
 
   lifetimeFounder: {
