@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SlideForge Pro — Monthly Creator Pass</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            },
+            darkBg: '#090d16',
+            cardBg: '#111726',
+            cardBorder: '#1e293b',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          animation: {
+            'gradient-x': 'gradient-x 6s ease infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 3s ease-in-out infinite',
+          },
+          keyframes: {
+            'gradient-x': {
+              '0%, 100%': { 'background-size': '200% 200%', 'background-position': 'left center' },
+              '50%': { 'background-size': '200% 200%', 'background-position': 'right center' },
+            },
+            'float': {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-8px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #060911;
+      color: #f8fafc;
+      overflow-x: hidden;
+    }
+    .glow-effect {
+      background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15), transparent 70%);
+    }
+    .card-glass {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+<body class="bg-[#060911] text-slate-100 antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- TOP ANNOUNCEMENT BANNER -->
+  <div class="w-full bg-gradient-to-r from-indigo-900/60 via-purple-900/60 to-pink-900/60 border-b border-indigo-500/20 py-2.5 px-4 text-center text-xs sm:text-sm font-medium text-indigo-200 flex items-center justify-center gap-2">
+    <span class="flex h-2 w-2 relative">
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+      <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+    </span>
+    <span>⚡ <strong>Monthly Creator Pass:</strong> Only $4.99/mo (₹399). Unlimited HD Exports. Cancel anytime with 1 click.</span>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="sticky top-0 z-50 w-full bg-[#060911]/80 backdrop-blur-xl border-b border-slate-800/80 px-4 sm:px-8 py-3.5">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+          <svg class="w-4 h-4 text-white fill-current" viewBox="0 0 24 24">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+          </svg>
+        </div>
+        <span class="font-extrabold text-lg sm:text-xl tracking-tight text-white">
+          Slide<span class="text-indigo-400">Forge</span> <span class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 ml-1">MONTHLY</span>
+        </span>
+      </div>
+
+      <div class="flex items-center gap-3 sm:gap-4">
+        <a href="#features" class="hidden md:inline-block text-xs font-semibold text-slate-400 hover:text-white transition-colors">Features</a>
+        <a href="#preview" class="hidden md:inline-block text-xs font-semibold text-slate-400 hover:text-white transition-colors">Demo</a>
+        <a href="#pricing" class="hidden md:inline-block text-xs font-semibold text-slate-400 hover:text-white transition-colors">Plans</a>
+        
+        <!-- BUY CTA BUTTON -->
+        <a data-gumroad-action="buy" data-gumroad-option="Pro Monthly" data-gumroad-recurrence="monthly" href="#pricing" class="cursor-pointer inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-fuchsia-600 hover:from-indigo-500 hover:to-fuchsia-500 text-white text-xs sm:text-sm font-bold shadow-lg shadow-indigo-600/30 hover:scale-[1.02] active:scale-[0.98] transition-all">
+          <span>Start Monthly Pro</span>
+          <span class="text-xs opacity-80" data-gumroad-field="price">$4.99/mo</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <header class="relative pt-12 sm:pt-20 pb-16 sm:pb-24 px-4 sm:px-6 overflow-hidden glow-effect">
+    <div class="max-w-4xl mx-auto text-center space-y-6 sm:space-y-8">
+      
+      <!-- RATING BADGE -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-pill text-xs text-indigo-300 shadow-inner">
+        <div class="flex text-amber-400">
+          ★★★★★
+        </div>
+        <span class="font-semibold text-white">4.9 / 5.0</span>
+        <span class="text-slate-400">•</span>
+        <span data-gumroad-field="review-count">Trusted by 2,400+ Creators & Founders</span>
+      </div>
+
+      <!-- HEADLINE -->
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-[1.15]">
+        Elevate Your Social Presence with <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">Monthly Pro Power</span>
+      </h1>
+
+      <!-- SUBHEADLINE -->
+      <p class="text-base sm:text-xl text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
+        Unlock unlimited multi-page PDF & PNG exports, all 8 creator fonts, and AI generations. Perfect flexibility for active content creators.
+      </p>
+
+      <!-- BUY ACTION GROUP -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2">
+        <a data-gumroad-action="buy" data-gumroad-option="Pro Monthly" data-gumroad-recurrence="monthly" class="w-full sm:w-auto cursor-pointer inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-fuchsia-600 hover:from-indigo-500 hover:to-fuchsia-500 text-white font-extrabold text-base sm:text-lg shadow-xl shadow-indigo-600/30 hover:scale-[1.02] active:scale-[0.98] transition-all">
+          <span>Start $4.99/mo Subscription</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        </a>
+        <a href="https://postcraft-studio-hazel.vercel.app" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl glass-pill hover:bg-white/10 text-slate-200 font-bold text-sm transition-all border border-slate-700">
+          <span>Open Free Studio Demo</span>
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        </a>
+      </div>
+
+      <!-- TRUST HIGHLIGHTS -->
+      <div class="pt-4 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs text-slate-400">
+        <div class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          <span>Cancel Anytime in 1 Click</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          <span>Zero Watermarks</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          <span>Instant Order ID Unlock</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- INTERACTIVE CAROUSEL PREVIEW SECTION -->
+  <section id="preview" class="py-12 px-4 sm:px-6 max-w-5xl mx-auto">
+    <div class="card-glass rounded-3xl p-6 sm:p-10 border border-slate-800 shadow-2xl relative overflow-hidden">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-800">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-bold">Interactive Demo</span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">High-Converting LinkedIn & Social Decks</h2>
+        </div>
+        <!-- SLIDE TABS -->
+        <div class="flex items-center gap-2 bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800">
+          <button onclick="switchSlide(0)" id="tab-0" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-indigo-600 text-white shadow">Slide 1 (Hook)</button>
+          <button onclick="switchSlide(1)" id="tab-1" class="px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all">Slide 2 (Content)</button>
+          <button onclick="switchSlide(2)" id="tab-2" class="px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all">Slide 3 (CTA)</button>
+        </div>
+      </div>
+
+      <!-- CAROUSEL CANVAS PREVIEW CONTAINER -->
+      <div class="py-8 flex items-center justify-center">
+        <div id="slide-display" class="w-full max-w-sm sm:max-w-md aspect-[4/5] rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950/80 border border-indigo-500/30 p-8 flex flex-col justify-between shadow-2xl shadow-indigo-950/50 transition-all duration-300 transform">
+          
+          <!-- BRAND HEADER -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-sm text-white">SF</div>
+              <div>
+                <div class="text-sm font-bold text-white flex items-center gap-1">
+                  Alex Vance
+                  <svg class="w-3.5 h-3.5 text-sky-400 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                </div>
+                <div class="text-[11px] text-slate-400">@alex_builds • slideforge.io</div>
+              </div>
+            </div>
+            <span id="slide-num" class="text-xs font-mono px-2 py-1 rounded-lg bg-slate-800/80 text-slate-300">1 / 5</span>
+          </div>
+
+          <!-- SLIDE BODY -->
+          <div class="space-y-4 my-auto">
+            <span id="slide-badge" class="inline-block text-[11px] font-bold px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">🔥 MONTHLY CREATOR PASS</span>
+            <h3 id="slide-title" class="text-2xl sm:text-3xl font-black text-white leading-tight">Create & Publish Decks That Command Attention</h3>
+            <p id="slide-content" class="text-sm text-slate-300 leading-relaxed">
+              Export stunning multi-page PDFs ready for LinkedIn document uploads with zero watermarks.
+            </p>
+          </div>
+
+          <!-- SLIDE FOOTER -->
+          <div class="flex items-center justify-between pt-4 border-t border-slate-800/80 text-xs text-slate-400">
+            <span id="slide-footer-text">Swipe to read →</span>
+            <span class="text-indigo-400 font-semibold font-mono">SlideForge Pro</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES GRID -->
+  <section id="features" class="py-16 sm:py-24 px-4 sm:px-6 max-w-6xl mx-auto space-y-12">
+    <div class="text-center space-y-3">
+      <span class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-bold">Included in Monthly Pro</span>
+      <h2 class="text-3xl sm:text-4xl font-black text-white">Full Creator Toolset at $4.99/mo</h2>
+      <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">Everything you need to post high-performing carousels every single week.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Card 1 -->
+      <div class="card-glass rounded-3xl p-6 sm:p-8 space-y-4 hover:border-indigo-500/40 transition-all group">
+        <div class="w-12 h-12 rounded-2xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-white">Multi-Page LinkedIn PDF</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">
+          Export full carousels as crisp multi-page PDFs ready for LinkedIn Document posts that drive 5x higher engagement and follower growth.
+        </p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card-glass rounded-3xl p-6 sm:p-8 space-y-4 hover:border-purple-500/40 transition-all group">
+        <div class="w-12 h-12 rounded-2xl bg-purple-600/20 text-purple-400 flex items-center justify-center border border-purple-500/30 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-white">High-Res PNG ZIP</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">
+          1-click batch download numbered high-resolution PNG images formatted perfectly for Instagram multi-slide posts and Twitter threads.
+        </p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card-glass rounded-3xl p-6 sm:p-8 space-y-4 hover:border-pink-500/40 transition-all group">
+        <div class="w-12 h-12 rounded-2xl bg-pink-600/20 text-pink-400 flex items-center justify-center border border-pink-500/30 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-white">Gemini AI Deck Writer</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">
+          Turn rough notes or blog posts into structured viral carousels in seconds with custom Gemini AI integration.
+        </p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card-glass rounded-3xl p-6 sm:p-8 space-y-4 hover:border-amber-500/40 transition-all group">
+        <div class="w-12 h-12 rounded-2xl bg-amber-600/20 text-amber-400 flex items-center justify-center border border-amber-500/30 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-white">8 Google Creator Fonts</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">
+          Plus Jakarta Sans, Inter, Outfit, Space Grotesk, Syne, Bricolage Grotesque, Playfair Display, and JetBrains Mono.
+        </p>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="card-glass rounded-3xl p-6 sm:p-8 space-y-4 hover:border-emerald-500/40 transition-all group">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-600/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-white">Cloud Project Sync</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">
+          1-Click Google & Email login with real-time Supabase cloud database sync. Work seamlessly across desktop and tablet.
+        </p>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="card-glass rounded-3xl p-6 sm:p-8 space-y-4 hover:border-cyan-500/40 transition-all group">
+        <div class="w-12 h-12 rounded-2xl bg-cyan-600/20 text-cyan-400 flex items-center justify-center border border-cyan-500/30 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-white">Feed Preview Simulator</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">
+          Preview how your carousel will look inside a real LinkedIn desktop feed and Instagram mobile screen before hitting export.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING SECTION -->
+  <section id="pricing" class="py-16 sm:py-24 px-4 sm:px-6 max-w-4xl mx-auto">
+    <div class="card-glass rounded-3xl border-2 border-indigo-500/50 p-8 sm:p-12 relative overflow-hidden shadow-2xl shadow-indigo-950/60">
+      <div class="absolute top-0 right-0 bg-gradient-to-l from-indigo-600 to-purple-600 text-white text-[11px] uppercase tracking-widest font-extrabold px-6 py-2 rounded-bl-2xl shadow-lg">
+        MONTHLY SUBSCRIPTION • CANCEL ANYTIME
+      </div>
+
+      <div class="space-y-6">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-bold" data-gumroad-field="name">SlideForge Pro - Monthly Pass</span>
+          <h2 class="text-3xl sm:text-4xl font-black text-white mt-1">$4.99 / Month (₹399)</h2>
+        </div>
+
+        <div class="flex items-baseline gap-3">
+          <span class="text-5xl sm:text-6xl font-black text-white" data-gumroad-field="price">$4.99</span>
+          <span class="text-slate-400 text-xl">/ month</span>
+          <span class="text-xs font-bold text-emerald-400 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20">CANCEL ANYTIME</span>
+        </div>
+
+        <p class="text-sm text-slate-300 leading-relaxed">
+          Full unlimited access to the creator studio. Unlimited exports, zero watermarks, and instant Order ID activation.
+        </p>
+
+        <!-- WHAT'S INCLUDED LIST -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 py-4 border-y border-slate-800">
+          <div class="flex items-center gap-2.5 text-xs text-slate-200">
+            <span class="text-emerald-400 font-bold">✓</span>
+            <span>Unlimited Multi-Page PDF Exports</span>
+          </div>
+          <div class="flex items-center gap-2.5 text-xs text-slate-200">
+            <span class="text-emerald-400 font-bold">✓</span>
+            <span>High-Res PNG ZIP Batches</span>
+          </div>
+          <div class="flex items-center gap-2.5 text-xs text-slate-200">
+            <span class="text-emerald-400 font-bold">✓</span>
+            <span>100% Watermark-Free</span>
+          </div>
+          <div class="flex items-center gap-2.5 text-xs text-slate-200">
+            <span class="text-emerald-400 font-bold">✓</span>
+            <span>All 8 Premium Google Fonts</span>
+          </div>
+          <div class="flex items-center gap-2.5 text-xs text-slate-200">
+            <span class="text-emerald-400 font-bold">✓</span>
+            <span>Gemini AI Carousel Generator</span>
+          </div>
+          <div class="flex items-center gap-2.5 text-xs text-slate-200">
+            <span class="text-emerald-400 font-bold">✓</span>
+            <span>Cloud Database Sync & Multi-Drafts</span>
+          </div>
+        </div>
+
+        <!-- BUY NOW ACTION -->
+        <div class="space-y-3 pt-2">
+          <a data-gumroad-action="buy" data-gumroad-option="Pro Monthly" data-gumroad-recurrence="monthly" class="w-full cursor-pointer flex items-center justify-center gap-3 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-fuchsia-600 hover:from-indigo-500 hover:to-fuchsia-500 text-white font-extrabold text-lg shadow-xl shadow-indigo-600/30 hover:scale-[1.01] active:scale-[0.99] transition-all">
+            <span>Subscribe for $4.99/mo</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </a>
+
+          <div class="flex items-center justify-between text-xs text-slate-400 pt-2">
+            <span>🔒 Secure 256-bit SSL Checkout</span>
+            <a href="/l/slideforge-pro" class="text-indigo-400 hover:underline font-semibold">Prefer Lifetime Pass? Get it for $29 →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section class="py-16 px-4 sm:px-6 max-w-3xl mx-auto space-y-8">
+    <div class="text-center space-y-2">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white">Frequently Asked Questions</h2>
+      <p class="text-xs sm:text-sm text-slate-400">Everything you need to know about SlideForge Monthly Pro.</p>
+    </div>
+
+    <div class="space-y-4">
+      <details class="card-glass rounded-2xl p-5 group cursor-pointer">
+        <summary class="font-bold text-sm text-white flex items-center justify-between">
+          <span>How do I activate my subscription in SlideForge?</span>
+          <span class="text-indigo-400 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
+          Immediately after completing payment, Gumroad emails you a receipt with an Order ID. Open SlideForge, click "Upgrade", and enter your Order ID. Your Pro access activates immediately!
+        </p>
+      </details>
+
+      <details class="card-glass rounded-2xl p-5 group cursor-pointer">
+        <summary class="font-bold text-sm text-white flex items-center justify-between">
+          <span>Can I cancel anytime?</span>
+          <span class="text-indigo-400 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
+          Yes! You can cancel your subscription at any time with 1 click directly from your Gumroad receipt or settings. No questions asked.
+        </p>
+      </details>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-12 px-4 border-t border-slate-900 text-center text-xs text-slate-500 space-y-4">
+    <div class="flex items-center justify-center gap-2">
+      <span class="font-bold text-slate-300">SlideForge Pro</span>
+      <span>•</span>
+      <span>Built for High-Growth Creators</span>
+    </div>
+    <p>© 2026 SlideForge. All rights reserved. Powered by Gumroad.</p>
+  </footer>
+
+  <!-- SCRIPT FOR INTERACTIVE DEMO -->
+  <script>
+    const slidesData = [
+      {
+        badge: "🔥 VIRAL PLAYBOOK",
+        title: "7 Brutal Truths About Building Micro-SaaS in 2026",
+        content: "95% of founders build what they think users want instead of validating with high-converting visual carousels first.",
+        footer: "Swipe to read →",
+        num: "1 / 5"
+      },
+      {
+        badge: "💡 SECRET #1",
+        title: "Visual Carousels Get 5.4x Higher Engagement",
+        content: "Text-only posts get skipped in the feed. Visual slide decks command attention and keep readers swiping until the end.",
+        footer: "Keep swiping →",
+        num: "2 / 5"
+      },
+      {
+        badge: "🎯 ACTION STEP",
+        title: "Stop Spending 2 Hours in Canva Every Week",
+        content: "SlideForge lets you draft, style, and export pixel-perfect LinkedIn PDFs in under 60 seconds with 1 click.",
+        footer: "Try SlideForge Pro today",
+        num: "3 / 5"
+      }
+    ];
+
+    function switchSlide(index) {
+      const data = slidesData[index];
+      const display = document.getElementById('slide-display');
+      
+      display.style.opacity = '0.5';
+      display.style.transform = 'scale(0.98)';
+      
+      setTimeout(() => {
+        document.getElementById('slide-badge').innerText = data.badge;
+        document.getElementById('slide-title').innerText = data.title;
+        document.getElementById('slide-content').innerText = data.content;
+        document.getElementById('slide-footer-text').innerText = data.footer;
+        document.getElementById('slide-num').innerText = data.num;
+
+        [0, 1, 2].forEach(i => {
+          const tab = document.getElementById('tab-' + i);
+          if (i === index) {
+            tab.className = "px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-indigo-600 text-white shadow";
+          } else {
+            tab.className = "px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all";
+          }
+        });
+
+        display.style.opacity = '1';
+        display.style.transform = 'scale(1)';
+      }, 150);
+    }
+  </script>
+</body>
+</html>

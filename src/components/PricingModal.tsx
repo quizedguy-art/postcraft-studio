@@ -12,7 +12,6 @@ import {
   CreditCard, 
   Key, 
   ExternalLink,
-  RotateCcw,
   Loader2
 } from 'lucide-react';
 import { checkLicenseKeyRedeemed, claimLicenseKeyInCloud } from '../utils/supabase';
@@ -24,7 +23,6 @@ interface PricingModalProps {
   user?: any | null;
   onOpenAuth?: () => void;
   onUpgrade: (tier: 'pro' | 'lifetime', key?: string) => void;
-  onResetToFree?: () => void;
 }
 
 export const PricingModal: React.FC<PricingModalProps> = ({
@@ -34,7 +32,6 @@ export const PricingModal: React.FC<PricingModalProps> = ({
   user,
   onOpenAuth,
   onUpgrade,
-  onResetToFree,
 }) => {
   const [licenseKeyInput, setLicenseKeyInput] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
@@ -128,18 +125,10 @@ export const PricingModal: React.FC<PricingModalProps> = ({
           </p>
 
           {subscription.isPro && (
-            <div className="pt-2 flex items-center justify-center gap-3">
+            <div className="pt-2 flex items-center justify-center">
               <span className="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/30">
                 ⭐ You are currently on {subscription.tier.toUpperCase()} Pro
               </span>
-              {onResetToFree && (
-                <button
-                  onClick={onResetToFree}
-                  className="text-xs text-slate-400 hover:text-rose-400 underline flex items-center gap-1"
-                >
-                  <RotateCcw className="w-3 h-3" /> Reset to Free
-                </button>
-              )}
             </div>
           )}
         </div>

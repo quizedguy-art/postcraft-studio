@@ -935,15 +935,6 @@ export function App() {
         user={user}
         onOpenAuth={() => setIsAuthModalOpen(true)}
         onUpgrade={handleUpgrade}
-        onResetToFree={() => {
-          setSubscription({
-            isPro: false,
-            tier: 'free',
-            exportsToday: 0,
-            maxFreeExportsPerDay: 5,
-          });
-          setProject(p => ({ ...p, showWatermark: true }));
-        }}
       />
     </div>
   );
