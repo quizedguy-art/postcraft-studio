@@ -219,20 +219,20 @@ export async function checkLicenseKeyRedeemed(licenseKey: string, currentUserId?
   if (!cleanKey) return { isRedeemed: false };
 
   try {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('id, is_pro')
-      .eq('license_key', cleanKey);
+    // 1. Check redeemed_licenses table (publicly queryable to detect claimed keys)
+    const { data: licenseRecord, error: lErr } = await supabase
+      .from('redeemed_licenses')
+      .select('user_id')
+      .eq('license_key', cleanKey)
+      .maybeSingle();
 
-    if (error || !data) return { isRedeemed: false };
-
-    // Check if another account already activated this key
-    const claimedByAnother = data.find((row: any) => row.id !== currentUserId && row.is_pro);
-    if (claimedByAnother) {
-      return {
-        isRedeemed: true,
-        message: 'This license key / order ID has already been redeemed by another account. Each purchase is strictly valid for 1 account.',
-      };
+    if (!lErr && licenseRecord) {
+      if (licenseRecord.user_id !== currentUserId) {
+        return {
+          isRedeemed: true,
+          message: 'This license key / order ID is already bound to another account. Each purchase is strictly for 1 account.',
+        };
+      }
     }
   } catch (err) {
     console.error('Error checking license redemption:', err);
@@ -240,4 +240,47 @@ export async function checkLicenseKeyRedeemed(licenseKey: string, currentUserId?
 
   return { isRedeemed: false };
 }
+
+/**
+ * Claim and lock a license key to a user account
+ */
+export async function claimLicenseKeyInCloud(licenseKey: string, userId: string): Promise<{ success: boolean; message?: string }> {
+  if (!supabase) return { success: true };
+
+  const cleanKey = licenseKey.trim();
+  try {
+    // Insert into redeemed_licenses
+    const { error: insErr } = await supabase
+      .from('redeemed_licenses')
+      .insert({
+        license_key: cleanKey,
+        user_id: userId,
+      });
+
+    if (insErr) {
+      // If error code is 23505 (unique_violation), it means another account already claimed it!
+      if (insErr.code === '23505' || insErr.message?.includes('duplicate key')) {
+        return {
+          success: false,
+          message: 'This license key / order ID has already been redeemed by another account.',
+        };
+      }
+    }
+
+    // Update user profile to Pro
+    await saveUserSubscriptionToCloud(userId, {
+      isPro: true,
+      tier: 'lifetime',
+      licenseKey: cleanKey,
+      exportsToday: 0,
+      maxFreeExportsPerDay: 5,
+    });
+
+    return { success: true };
+  } catch (e: any) {
+    console.error('Error claiming license in cloud:', e);
+    return { success: false, message: e.message || 'Could not claim license.' };
+  }
+}
+
 

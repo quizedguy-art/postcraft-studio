@@ -15,7 +15,7 @@ import {
   RotateCcw,
   Loader2
 } from 'lucide-react';
-import { checkLicenseKeyRedeemed } from '../utils/supabase';
+import { checkLicenseKeyRedeemed, claimLicenseKeyInCloud } from '../utils/supabase';
 
 interface PricingModalProps {
   isOpen: boolean;
@@ -75,6 +75,17 @@ export const PricingModal: React.FC<PricingModalProps> = ({
       // 2. Validate format and provider
       const result = await verifyLicenseKey(cleanKey);
       if (result.valid) {
+        // Claim and bind key in cloud database
+        const claimResult = await claimLicenseKeyInCloud(cleanKey, user.id);
+        if (!claimResult.success) {
+          setVerifyStatus({ 
+            type: 'error', 
+            message: `❌ ${claimResult.message || 'This license is already registered to another account.'}` 
+          });
+          setIsVerifying(false);
+          return;
+        }
+
         onUpgrade(result.tier || 'lifetime', cleanKey);
         triggerConfetti();
         setVerifyStatus({ type: 'success', message: `✅ ${result.message}` });
