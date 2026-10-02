@@ -93,7 +93,7 @@ export async function verifyLicenseKey(licenseKey: string): Promise<LicenseValid
   // - Formatted merchant license keys (e.g. XXXX-XXXX-XXXX-XXXX)
   const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   const formattedKeyRegex = /^[A-Z0-9]{4,8}-[A-Z0-9]{4,8}-[A-Z0-9]{4,8}-[A-Z0-9]{4,8}$/i;
-  const gumroadOrderIdRegex = /^[A-Za-z0-9_-]{8,40}$/;
+  const gumroadOrderIdRegex = /^[A-Za-z0-9_=+/-]{8,64}$/;
 
   if (uuidRegex.test(cleanKey) || formattedKeyRegex.test(cleanKey) || gumroadOrderIdRegex.test(cleanKey)) {
     return {
